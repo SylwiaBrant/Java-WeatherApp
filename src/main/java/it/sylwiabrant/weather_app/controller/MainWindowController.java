@@ -1,6 +1,7 @@
 package it.sylwiabrant.weather_app.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import it.sylwiabrant.weather_app.model.WeatherConditions;
 import it.sylwiabrant.weather_app.view.ViewFactory;
@@ -135,48 +136,70 @@ public class MainWindowController implements Initializable {
     }
 
     public WeatherConditions fetchCurrentWeather() throws IOException {
-       // InputStream WEATHER_FILE = new FileInputStream("today.json");
-     //   JsonReader jsonReader = Json.createReader(WEATHER_FILE);
+
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(new FileReader("today.json"), JsonObject.class);
 
-     //   BufferedReader br = new BufferedReader(new FileReader(WEATHER_FILE));
-     //   JsonObject jobj = new Gson().fromJson(myJSONString, JsonObject.class);
-      //  double result = jobj.get("test").getAsDouble();
-
-
-    //    JsonObject jsonObject = jsonReader.readObject();
-        System.out.println(jsonObject);
-
         WeatherConditions cond = new WeatherConditions();
         cond.setCity(jsonObject.get("name").getAsString());
+        JsonArray arr = jsonObject.getAsJsonArray("weather");
+
+        for(int i = 0; i < arr.size(); i++){
+            JsonObject obj1 = (JsonObject) arr.get(i);
+            cond.setDescription(obj1.get("main").getAsString());
+        }
+      //  cond.setDescription(jsonObject.getAsJsonArray("weather").getAsJsonObject().get("main").getAsString());
         cond.setCountry(jsonObject.getAsJsonObject("sys").get("country").getAsString());
         cond.setCurrentTemp(jsonObject.getAsJsonObject("main").get("temp").getAsDouble());
-  /*      cond.setWindChill(Double.valueOf(jsonObject.getJsonObject("main").getJsonObject("feels_like").get(
-                "day").toString()));
-        cond.setPressure(Double.valueOf(jsonObject.getJsonObject("main").get("pressure").toString()));
-        cond.setHumidity(Double.valueOf(jsonObject.getJsonObject("main").get("humidity").toString()));
-        cond.setWindSpeed(Double.valueOf(jsonObject.getJsonObject("wind").get("speed").toString()));
-        cond.setWindDirection(Double.valueOf(jsonObject.getJsonObject("wind").get("deg").toString()));
-*/
-        System.out.println(cond.getCity() + " " + cond.getCountry() + " " + cond.getCurrentTemp());
+        cond.setWindChill(jsonObject.getAsJsonObject("main").get("feels_like").getAsDouble());
+        cond.setPressure(jsonObject.getAsJsonObject("main").get("pressure").getAsDouble());
+        cond.setHumidity(jsonObject.getAsJsonObject("main").get("humidity").getAsDouble());
+        cond.setWindSpeed(jsonObject.getAsJsonObject("wind").get("speed").getAsDouble());
+        cond.setWindDirection(jsonObject.getAsJsonObject("wind").get("deg").getAsDouble());
+        cond.setVisibility(jsonObject.get("visibility").getAsInt());
+        cond.setClouds(jsonObject.getAsJsonObject("clouds").get("all").getAsInt());
 
         return cond;
     }
 
+    public WeatherConditions fetchCurrentWeather() throws IOException {
+
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(new FileReader("today.json"), JsonObject.class);
+
+        WeatherConditions cond = new WeatherConditions();
+        cond.setCity(jsonObject.get("name").getAsString());
+        JsonArray arr = jsonObject.getAsJsonArray("weather");
+
+        for(int i = 0; i < arr.size(); i++){
+            JsonObject obj1 = (JsonObject) arr.get(i);
+            cond.setDescription(obj1.get("main").getAsString());
+        }
+        //  cond.setDescription(jsonObject.getAsJsonArray("weather").getAsJsonObject().get("main").getAsString());
+        cond.setCountry(jsonObject.getAsJsonObject("sys").get("country").getAsString());
+        cond.setCurrentTemp(jsonObject.getAsJsonObject("main").get("temp").getAsDouble());
+        cond.setWindChill(jsonObject.getAsJsonObject("main").get("feels_like").getAsDouble());
+        cond.setPressure(jsonObject.getAsJsonObject("main").get("pressure").getAsDouble());
+        cond.setHumidity(jsonObject.getAsJsonObject("main").get("humidity").getAsDouble());
+        cond.setWindSpeed(jsonObject.getAsJsonObject("wind").get("speed").getAsDouble());
+        cond.setWindDirection(jsonObject.getAsJsonObject("wind").get("deg").getAsDouble());
+        cond.setVisibility(jsonObject.get("visibility").getAsInt());
+        cond.setClouds(jsonObject.getAsJsonObject("clouds").get("all").getAsInt());
+
+        return cond;
+    }
+    
     public void setCurrentWeatherView() throws IOException {
 
-
         WeatherConditions cond = this.fetchCurrentWeather();
-        System.out.println(cond.getCity() + " " + cond.getCountry() + " " + cond.getCurrentTemp());
-        locationLabel.setText("Lolo");
-      //  tempLabel.setText(String.valueOf(cond.getCurrentTemp()) + " °C");
-      //  windChillLabel.setText(String.valueOf(cond.getWindChill()) + " °C");
-    /*    pressureLabel1.setText(String.valueOf(cond.getPressure()) + " hPa");
-        windSpeedLabel1.setText(String.valueOf(cond.getWindSpeed()) + " m/s");
-        windDirectionLabel1.setText(String.valueOf(cond.getWindDirection()));
-        humidityLabel1.setText(String.valueOf(cond.getHumidity()) + " %");*/
-
+        locationLabel.setText(cond.getCity() + ", " + cond.getCountry());
+        tempLabel.setText(String.valueOf(cond.getCurrentTemp()) + " °C");
+        windChillLabel.setText(String.valueOf(cond.getWindChill()) + " °C");
+        pressureLabel.setText(String.valueOf(cond.getPressure()) + " hPa");
+        windLabel.setText(String.valueOf(cond.getWindSpeed()) + " m/s");
+        humidityLabel.setText(String.valueOf(cond.getHumidity()) + " %");
+        visibilityLabel.setText(String.valueOf(cond.getVisibility()) + " m");
+        cloudsLabel.setText(String.valueOf(cond.getClouds()) + " %");
     }
 
     @Override
