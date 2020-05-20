@@ -1,0 +1,8 @@
+module it.sylwiabrant.weather_app {
+    requires javafx.controls;
+    requires javafx.fxml;
+    requires com.google.gson;
+
+    opens it.sylwiabrant.weather_app to javafx.fxml;
+    exports it.sylwiabrant.weather_app;
+}
