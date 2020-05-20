@@ -6,12 +6,13 @@ package it.sylwiabrant.weather_app.model;
 public class WeatherConditions {
     private String city;
     private String country;
+    private String description;
     private double currentTemp;
     private double windChill;
     private double morningTemp;
     private double eveningTemp;
     private double nightTemp;
-    private double visibility;
+    private int visibility;
     private double pressure;
     private double humidity;
     private double windSpeed;
@@ -36,6 +37,12 @@ public class WeatherConditions {
         this.country = country;
     }
 
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
     public double getCurrentTemp() {
         return currentTemp;
     }
@@ -76,11 +83,11 @@ public class WeatherConditions {
         this.nightTemp = nightTemp;
     }
 
-    public double getVisibility() {
+    public int getVisibility() {
         return visibility;
     }
 
-    public void setVisibility(double visibility) {
+    public void setVisibility(int visibility) {
         this.visibility = visibility;
     }
 

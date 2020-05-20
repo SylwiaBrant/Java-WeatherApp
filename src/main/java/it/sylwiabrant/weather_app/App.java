@@ -2,6 +2,7 @@ package it.sylwiabrant.weather_app;
 
 import it.sylwiabrant.weather_app.controller.MainWindowController;
 import it.sylwiabrant.weather_app.model.WeatherConditions;
+import it.sylwiabrant.weather_app.view.ViewFactory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,17 +21,17 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        ViewFactory viewFactory = new ViewFactory();
+     //   MainWindowController controller = new MainWindowController("MainWindowFXML");
+        viewFactory.showMainWindowView();
 
-      //  MainWindowController controller = new MainWindowController("MainWindowFXML");
-     // controller.setCurrentWeatherView();
-
-        FXMLLoader loader = new FXMLLoader();
+    /*    FXMLLoader loader = new FXMLLoader();
         URL xmlUrl = getClass().getResource("MainWindowFXML.fxml");
         loader.setLocation(xmlUrl);
         Parent root = loader.load();
 
         stage.setScene(new Scene(root));
-        stage.show();
+        stage.show();*/
     }
 
 

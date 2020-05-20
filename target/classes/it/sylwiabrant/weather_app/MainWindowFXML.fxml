@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
@@ -20,13 +21,14 @@
                   <Label layoutX="15.0" layoutY="60.0" text="Opady:" />
                   <Label layoutX="15.0" layoutY="100.0" text="Ciśnienie:" />
                   <Label layoutX="15.0" layoutY="120.0" text="Wilgotność:" />
-                  <Label layoutX="100.0" layoutY="60.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
-                  <Label layoutX="100.0" layoutY="100.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
-                  <Label layoutX="100.0" layoutY="120.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <Label fx:id="downfallLabel1" layoutX="100.0" layoutY="60.0" prefHeight="17.0" prefWidth="40.0" />
+                  <Label fx:id="pressureLabel1" layoutX="100.0" layoutY="100.0" prefHeight="17.0" prefWidth="40.0" />
+                  <Label fx:id="humidityLabel1" layoutX="100.0" layoutY="120.0" prefHeight="17.0" prefWidth="40.0" />
                   <Label layoutX="15.0" layoutY="80.0" text="Wiatr:" />
-                  <Label layoutX="100.0" layoutY="80.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <Label fx:id="windLabel1" layoutX="100.0" layoutY="80.0" prefHeight="17.0" prefWidth="40.0" />
                   <Label layoutX="15.0" layoutY="140.0" prefHeight="17.0" prefWidth="81.0" text="Zachmurzenie:" />
-                  <Label layoutX="100.0" layoutY="140.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <Label fx:id="cloudsLabel1" layoutX="100.0" layoutY="140.0" prefHeight="17.0" prefWidth="40.0" />
+                  <ImageView fx:id="day1Icon" fitHeight="40.0" fitWidth="56.0" layoutX="20.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" prefHeight="160.0" prefWidth="200.0">
                <children>
@@ -36,15 +38,16 @@
                      </font>
                   </Label>
                   <Label layoutX="15.0" layoutY="60.0" text="Opady:" />
-                  <Label layoutX="100.0" layoutY="60.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <Label fx:id="downfallLabel2" layoutX="100.0" layoutY="60.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
                   <Label layoutX="15.0" layoutY="100.0" text="Ciśnienie:" />
                   <Label layoutX="15.0" layoutY="120.0" text="Wilgotność:" />
-                  <Label layoutX="100.0" layoutY="100.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
-                  <Label layoutX="100.0" layoutY="120.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <Label fx:id="pressureLabel2" layoutX="100.0" layoutY="100.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <Label fx:id="humidityLabel2" layoutX="100.0" layoutY="120.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
                   <Label layoutX="15.0" layoutY="80.0" text="Wiatr:" />
-                  <Label layoutX="100.0" layoutY="80.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <Label fx:id="windLabel2" layoutX="100.0" layoutY="80.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
                   <Label layoutX="15.0" layoutY="140.0" prefHeight="17.0" prefWidth="81.0" text="Zachmurzenie:" />
-                  <Label layoutX="100.0" layoutY="140.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <Label fx:id="cloudsLabel2" layoutX="100.0" layoutY="140.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <ImageView fx:id="day2Icon" fitHeight="40.0" fitWidth="56.0" layoutX="20.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" prefHeight="165.0" prefWidth="200.0">
                <children>
@@ -54,15 +57,16 @@
                      </font>
                   </Label>
                   <Label layoutX="15.0" layoutY="60.0" text="Opady:" />
-                  <Label layoutX="100.0" layoutY="60.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <Label fx:id="downfallLabel3" layoutX="100.0" layoutY="60.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
                   <Label layoutX="15.0" layoutY="100.0" text="Ciśnienie:" />
                   <Label layoutX="15.0" layoutY="120.0" text="Wilgotność:" />
-                  <Label layoutX="100.0" layoutY="100.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
-                  <Label layoutX="100.0" layoutY="120.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <Label fx:id="pressureLabel3" layoutX="100.0" layoutY="100.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <Label fx:id="humidityLabel3" layoutX="100.0" layoutY="120.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
                   <Label layoutX="15.0" layoutY="80.0" text="Wiatr:" />
-                  <Label layoutX="100.0" layoutY="80.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <Label fx:id="windLabel3" layoutX="100.0" layoutY="80.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
                   <Label layoutX="15.0" layoutY="140.0" prefHeight="17.0" prefWidth="81.0" text="Zachmurzenie:" />
-                  <Label layoutX="100.0" layoutY="140.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <Label fx:id="cloudsLabel3" layoutX="100.0" layoutY="140.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <ImageView fx:id="day3Icon" fitHeight="40.0" fitWidth="56.0" layoutX="20.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
                </children></AnchorPane>
             <AnchorPane prefHeight="160.0" prefWidth="253.0">
                <children>
@@ -72,33 +76,95 @@
                      </font>
                   </Label>
                   <Label layoutX="15.0" layoutY="60.0" text="Opady:" />
-                  <Label layoutX="100.0" layoutY="60.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <Label fx:id="downfallLabel4" layoutX="100.0" layoutY="60.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
                   <Label layoutX="15.0" layoutY="100.0" text="Ciśnienie:" />
                   <Label layoutX="15.0" layoutY="120.0" text="Wilgotność:" />
-                  <Label layoutX="100.0" layoutY="100.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
-                  <Label layoutX="100.0" layoutY="120.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <Label fx:id="pressureLabel4" layoutX="100.0" layoutY="100.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <Label fx:id="humidityLabel4" layoutX="100.0" layoutY="120.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
                   <Label layoutX="15.0" layoutY="80.0" text="Wiatr:" />
-                  <Label layoutX="100.0" layoutY="80.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <Label fx:id="windLabel4" layoutX="100.0" layoutY="80.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
                   <Label layoutX="15.0" layoutY="140.0" prefHeight="17.0" prefWidth="81.0" text="Zachmurzenie:" />
-                  <Label layoutX="100.0" layoutY="140.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <Label fx:id="cloudsLabel4" layoutX="100.0" layoutY="140.0" prefHeight="17.0" prefWidth="40.0" text="Label" />
+                  <ImageView fx:id="day4Icon" fitHeight="40.0" fitWidth="56.0" layoutX="20.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
                </children></AnchorPane>
         </items>
       </SplitPane>
       <HBox fx:id="locationsMenu" prefHeight="40.0" prefWidth="660.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Label fx:id="tempLabel" alignment="CENTER" layoutX="130.0" layoutY="126.0" prefHeight="54.0" prefWidth="116.0" text="Temp" textAlignment="CENTER" wrapText="true">
+      <Label fx:id="tempLabel" alignment="CENTER" layoutX="125.0" layoutY="174.0" prefHeight="54.0" prefWidth="133.0" text="Temp" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
-      <Label fx:id="locationLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="27.0" layoutY="65.0" prefHeight="48.0" prefWidth="322.0" text="Location" textAlignment="CENTER" wrapText="true">
+      <Label fx:id="locationLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="30.0" prefHeight="48.0" prefWidth="322.0" text="Location" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="windChillLabel" alignment="CENTER" layoutX="125.0" layoutY="186.0" prefHeight="27.0" prefWidth="127.0" text="WindChill" textAlignment="CENTER">
+      <Label fx:id="windChillLabel" alignment="CENTER" layoutX="125.0" layoutY="237.0" prefHeight="27.0" prefWidth="127.0" text="WindChill" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
+      <Label layoutX="340.0" layoutY="78.0" text="Opady:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="340.0" layoutY="141.0" text="Ciśnienie:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="340.0" layoutY="174.0" text="Wilgotność:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="downfallLabel" layoutX="460.0" layoutY="78.0" prefHeight="17.0" prefWidth="80.0" text="Label">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="pressureLabel" layoutX="460.0" layoutY="141.0" prefHeight="17.0" prefWidth="80.0" text="Label">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="humidityLabel" layoutX="460.0" layoutY="174.0" prefHeight="17.0" prefWidth="80.0" text="Label">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="340.0" layoutY="110.0" text="Wiatr:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="windLabel" layoutX="460.0" layoutY="110.0" prefHeight="17.0" prefWidth="80.0" text="Label">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="340.0" layoutY="214.0" prefHeight="25.0" prefWidth="116.0" text="Zachmurzenie:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="cloudsLabel" layoutX="460.0" layoutY="214.0" prefHeight="17.0" prefWidth="80.0" text="Label">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="340.0" layoutY="250.0" prefHeight="25.0" prefWidth="116.0" text="Widoczność:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="visibilityLabel" layoutX="460.0" layoutY="250.0" prefHeight="17.0" prefWidth="80.0" text="Label">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="currentIcon" fitHeight="89.0" fitWidth="116.0" layoutX="131.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
