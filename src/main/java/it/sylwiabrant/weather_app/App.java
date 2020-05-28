@@ -1,37 +1,57 @@
 package it.sylwiabrant.weather_app;
 
-import it.sylwiabrant.weather_app.controller.MainWindowController;
-import it.sylwiabrant.weather_app.model.WeatherConditions;
+import it.sylwiabrant.weather_app.controller.WeatherFetcherService;
+import it.sylwiabrant.weather_app.controller.WeatherViewController;
+import it.sylwiabrant.weather_app.model.CurrentWeather;
+import it.sylwiabrant.weather_app.model.WeatherDataCollection;
 import it.sylwiabrant.weather_app.view.ViewFactory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 
 /**
  * JavaFX App
  */
 public class App extends Application {
 
-    private static Scene scene;
-
     @Override
     public void start(Stage stage) throws IOException {
-        ViewFactory viewFactory = new ViewFactory();
+        AnchorPane root = new AnchorPane();
+   //     ViewFactory viewFactory = new ViewFactory();
      //   MainWindowController controller = new MainWindowController("MainWindowFXML");
-        viewFactory.showMainWindowView();
+   //     viewFactory.showMainWindowView();
 
-    /*    FXMLLoader loader = new FXMLLoader();
-        URL xmlUrl = getClass().getResource("MainWindowFXML.fxml");
-        loader.setLocation(xmlUrl);
-        Parent root = loader.load();
+ /*       stage.setTitle("Aplikacja pogodowa");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/sylwiabrant/weather_app" +
+                "/MainWindowFXML.fxml"));
+        WeatherDataCollection weatherData = new WeatherDataCollection();
+        WeatherFetcherService fetcher = new WeatherFetcherService(weatherData);
+        WeatherViewController weatherViewController = new WeatherViewController(weatherData, "/it/sylwiabrant/weather_app" +
+                "/MainWindowFXML.fxml");
 
-        stage.setScene(new Scene(root));
+
+;
+        fxmlLoader.setController(weatherViewController);
+
+        Parent parent;
+        try {
+            parent = fxmlLoader.load();
+        } catch (IOException e){
+            e.printStackTrace();
+            return;
+        }
+        Scene scene = new Scene(parent);
+        scene.getStylesheets().add(getClass().getResource("/it/sylwiabrant/weather_app/style.css").toExternalForm());
+     //   Stage stage = new Stage();
+        stage.setScene(scene);
         stage.show();*/
+        ViewFactory viewFactory = new ViewFactory(new WeatherDataCollection());
+        viewFactory.showWeatherView();
     }
 
 
