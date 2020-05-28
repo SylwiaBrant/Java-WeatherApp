@@ -1,0 +1,18 @@
+AnchorPane{
+    -fx-background-color: linear-gradient(to bottom right, rgb(87,44,127), rgb(49,147,188));
+    -fx-background: rgb(26, 29, 38);
+}
+
+.split-pane:horizontal{
+   -fx-background-color: rgb(35, 39, 49);
+}
+
+.split-pane-divider{
+   -fx-background-color: rgb(26, 29, 38);
+}
+
+.result{
+    -fx-font-weight: bold;
+}
+
+

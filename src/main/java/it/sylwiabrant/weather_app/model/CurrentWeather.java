@@ -3,7 +3,7 @@ package it.sylwiabrant.weather_app.model;
 /**
  * Created by Sylwia Brant
  */
-public class WeatherConditions {
+public class CurrentWeather {
     private String city;
     private String country;
     private String description;
