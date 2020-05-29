@@ -30,6 +30,7 @@ public class WeatherFetcherService implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             fetchCurrentWeather();
+            fetchWeatherForecast();
             System.out.println("Inicjalizacja WeatherFetcherService.");
         } catch (IOException e) {
             e.printStackTrace();
@@ -42,17 +43,18 @@ public class WeatherFetcherService implements Initializable {
         if (jsonObject != null) {
             try {
                 System.out.println(jsonObject);
-                weatherData.loadWeatherData(jsonObject);
+                weatherData.loadCurrentData(jsonObject);
             } catch (IOException exc) {
                 // handle exception...
             }
         }
     }
     
-    private void fetchWeatherForecast() throws IOException {
+    public void fetchWeatherForecast() throws IOException {
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(new FileReader("forecast.json"), JsonObject.class);
         JsonArray forecastArray = jsonObject.getAsJsonArray("list");
+        System.out.println(forecastArray);
         if (forecastArray != null) {
             try {
                 weatherData.loadForecast(forecastArray);

@@ -15,10 +15,12 @@ import java.util.ArrayList;
  */
 public class WeatherDataCollection {
     private ArrayList<CurrentWeather> currentWeatherList;
+    private ArrayList<CurrentWeather> forecastList;
     private WeatherFetcherService fetcher;
 
     public WeatherDataCollection() {
         this.currentWeatherList = new ArrayList<CurrentWeather>();
+        this.forecastList = new ArrayList<CurrentWeather>();
         this.fetcher = new WeatherFetcherService(this);
         System.out.println("Tworzenie WeatherDataCollection.");
     }
@@ -27,7 +29,7 @@ public class WeatherDataCollection {
 
     }
 
-    public void loadWeatherData(JsonObject jsonObject) throws FileNotFoundException {
+    public void loadCurrentData(JsonObject jsonObject) throws FileNotFoundException {
         System.out.println("ładowanie danych do WeatherDataCollection.");
         System.out.println(jsonObject);
         CurrentWeather cond = new CurrentWeather();
@@ -55,10 +57,8 @@ public class WeatherDataCollection {
     }
 
     public void loadForecast(JsonArray arr) throws IOException {
-        ArrayList<CurrentWeather> forecast = new ArrayList<CurrentWeather>();
 
-
-        for(int i = 1; i < 4; i++){
+        for(int i = 1; i < 5; i++){
             CurrentWeather cond = new CurrentWeather();
             JsonObject day = (JsonObject)arr.get(i);
             JsonArray arr1 = day.getAsJsonArray("weather");
@@ -68,22 +68,22 @@ public class WeatherDataCollection {
 
 //            cond.setDescription(jsonObject.getAsJsonArray("weather").getAsJsonObject().get("main").getAsString());
             cond.setCurrentTemp(day.getAsJsonObject("main").get("temp").getAsDouble());
+            System.out.println(cond.getCurrentTemp());
             cond.setPressure(day.getAsJsonObject("main").get("pressure").getAsDouble());
             cond.setHumidity(day.getAsJsonObject("main").get("humidity").getAsDouble());
             cond.setWindSpeed(day.getAsJsonObject("wind").get("speed").getAsDouble());
             cond.setWindDirection(day.getAsJsonObject("wind").get("deg").getAsDouble());
             cond.setClouds(day.getAsJsonObject("clouds").get("all").getAsInt());
 
-            forecast.add(cond);
+            forecastList.add(cond);
         }
     }
 
     public CurrentWeather getCityWeather() {
-        System.out.println(currentWeatherList.get(0));
         return currentWeatherList.get(0);
     }
 
-    public CurrentWeather getCityForecast() {
-        return currentWeatherList.get(0);
+    public ArrayList<CurrentWeather> getCityForecast() {
+        return forecastList;
     }
 }
