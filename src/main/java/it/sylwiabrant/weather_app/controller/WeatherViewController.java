@@ -1,8 +1,5 @@
 package it.sylwiabrant.weather_app.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import it.sylwiabrant.weather_app.model.CurrentWeather;
 import it.sylwiabrant.weather_app.model.WeatherDataCollection;
 import it.sylwiabrant.weather_app.view.ViewFactory;
@@ -10,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 
 import java.io.*;
 import java.net.URL;
@@ -24,90 +21,6 @@ public class WeatherViewController implements Initializable {
 
     @FXML
     private ImageView currentIcon;
-
-    @FXML
-    private ImageView day1Icon;
-
-    @FXML
-    private Label tempLabel1;
-
-    @FXML
-    private Label downfallLabel1;
-
-    @FXML
-    private Label pressureLabel1;
-
-    @FXML
-    private Label humidityLabel1;
-
-    @FXML
-    private Label windLabel1;
-
-    @FXML
-    private Label cloudsLabel1;
-
-    @FXML
-    private ImageView day2Icon;
-
-    @FXML
-    private Label tempLabel2;
-
-    @FXML
-    private Label downfallLabel2;
-
-    @FXML
-    private Label pressureLabel2;
-
-    @FXML
-    private Label humidityLabel2;
-
-    @FXML
-    private Label windLabel2;
-
-    @FXML
-    private Label cloudsLabel2;
-
-    @FXML
-    private ImageView day3Icon;
-
-    @FXML
-    private Label tempLabel3;
-
-    @FXML
-    private Label downfallLabel3;
-
-    @FXML
-    private Label pressureLabel3;
-
-    @FXML
-    private Label humidityLabel3;
-
-    @FXML
-    private Label windLabel3;
-
-    @FXML
-    private Label cloudsLabel3;
-
-    @FXML
-    private ImageView day4Icon;
-
-    @FXML
-    private Label tempLabel4;
-
-    @FXML
-    private Label downfallLabel4;
-
-    @FXML
-    private Label pressureLabel4;
-
-    @FXML
-    private Label humidityLabel4;
-
-    @FXML
-    private Label windLabel4;
-
-    @FXML
-    private Label cloudsLabel4;
 
     @FXML
     private HBox locationsMenu;
@@ -139,6 +52,9 @@ public class WeatherViewController implements Initializable {
     @FXML
     private Label visibilityLabel;
 
+    @FXML
+    private GridPane forecastGrid;
+
     private WeatherDataCollection weatherData;
     private ViewFactory viewFactory;
     private String fxmlName;
@@ -151,9 +67,9 @@ public class WeatherViewController implements Initializable {
     
     public void setCurrentWeatherView() throws IOException {
         CurrentWeather cond = weatherData.getCityWeather();
-        System.out.println(cond.getCurrentTemp());
-        System.out.println(cond.getHumidity());
-   //     locationLabel.setText(cond.getCity() + ", " + cond.getCountry());
+     //   System.out.println(cond.getCurrentTemp());
+     //   System.out.println(cond.getHumidity());
+        locationLabel.setText(cond.getCity() + ", " + cond.getCountry());
         tempLabel.setText(String.valueOf(cond.getCurrentTemp()) + " °C");
         windChillLabel.setText(String.valueOf(cond.getWindChill()) + " °C");
         pressureLabel.setText(String.valueOf(cond.getPressure()) + " hPa");
@@ -165,14 +81,17 @@ public class WeatherViewController implements Initializable {
     }
 
     public void setWeatherForecast() throws IOException {
-        CurrentWeather cond = weatherData.getCityForecast();
-    //    for(CurrentWeather cond : forecast){
-            tempLabel1.setText(String.valueOf(cond.getCurrentTemp()) + " °C");
-            pressureLabel1.setText(String.valueOf(cond.getPressure()) + " hPa");
-            windLabel1.setText(String.valueOf(cond.getWindSpeed()) + " m/s");
-            humidityLabel1.setText(String.valueOf(cond.getHumidity()) + " %");
-            cloudsLabel1.setText(String.valueOf(cond.getClouds()) + " %");
-  //      }
+        ArrayList<CurrentWeather> forecast = weatherData.getCityForecast();
+        int i = 0;
+        for(CurrentWeather cond : forecast){
+         //   System.out.println(cond.getCurrentTemp());
+            forecastGrid.add(new Label(String.valueOf(cond.getCurrentTemp()) + " °C"),i,0);
+            forecastGrid.add(new Label(String.valueOf(cond.getPressure()) + " hPa"),i,1);
+            forecastGrid.add(new Label(String.valueOf(cond.getWindSpeed()) + " m/s"),i,2);
+            forecastGrid.add(new Label(String.valueOf(cond.getHumidity()) + " %"),i,3);
+            forecastGrid.add(new Label(String.valueOf(cond.getClouds()) + " %"),i,4);
+            i++;
+        }
     }
  /*   private void setWeatherIcon(String conditions, int day){
         switch (conditions){
@@ -195,8 +114,9 @@ public class WeatherViewController implements Initializable {
             System.out.println("Inicjalizacja WeatherViewController.");
             WeatherFetcherService weatherFetcherService = new WeatherFetcherService(weatherData);
             weatherFetcherService.fetchCurrentWeather();
+            weatherFetcherService.fetchWeatherForecast();
             setCurrentWeatherView();
-          //  setWeatherForecast();
+            setWeatherForecast();
         } catch (Exception e) {
             e.printStackTrace();
         }

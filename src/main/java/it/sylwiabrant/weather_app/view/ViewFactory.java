@@ -5,6 +5,7 @@ import it.sylwiabrant.weather_app.model.WeatherDataCollection;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.SplitPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
