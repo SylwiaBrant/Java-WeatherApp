@@ -5,7 +5,11 @@ import it.sylwiabrant.weather_app.model.WeatherDataCollection;
 import it.sylwiabrant.weather_app.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
@@ -69,6 +73,10 @@ public class WeatherViewController implements Initializable {
         CurrentWeather cond = weatherData.getCityWeather();
      //   System.out.println(cond.getCurrentTemp());
      //   System.out.println(cond.getHumidity());
+                 /*   URL path = this.getClass().getResource("/it/sylwiabrant/weather_app/Icons/water.png");
+            Image img = new Image(String.valueOf(path),20, 20, false, false);
+            ImageView imgView = new ImageView(img);
+            forecastGrid.add(imgView,i,0);*/
         locationLabel.setText(cond.getCity() + ", " + cond.getCountry());
         tempLabel.setText(String.valueOf(cond.getCurrentTemp()) + " °C");
         windChillLabel.setText(String.valueOf(cond.getWindChill()) + " °C");
@@ -82,15 +90,47 @@ public class WeatherViewController implements Initializable {
 
     public void setWeatherForecast() throws IOException {
         ArrayList<CurrentWeather> forecast = weatherData.getCityForecast();
-        int i = 0;
+        int i = 1;
         for(CurrentWeather cond : forecast){
-         //   System.out.println(cond.getCurrentTemp());
+         //   System.out.println(cond.getCurrentTemp();
+
             forecastGrid.add(new Label(String.valueOf(cond.getCurrentTemp()) + " °C"),i,0);
             forecastGrid.add(new Label(String.valueOf(cond.getPressure()) + " hPa"),i,1);
             forecastGrid.add(new Label(String.valueOf(cond.getWindSpeed()) + " m/s"),i,2);
             forecastGrid.add(new Label(String.valueOf(cond.getHumidity()) + " %"),i,3);
             forecastGrid.add(new Label(String.valueOf(cond.getClouds()) + " %"),i,4);
-            i++;
+            i+=2;
+        }
+        addIconsToForecast();
+    }
+
+    private void addIconsToForecast() {
+        for(int day=0; day < 4; day++){
+            URL path1 = this.getClass().getResource("/it/sylwiabrant/weather_app/Icons/temp.png");
+            Image img1 = new Image(String.valueOf(path1),25, 25, false, false);
+            ImageView imgView1 = new ImageView(img1);
+            forecastGrid.add(imgView1,2*day,0);
+
+            URL path2 = this.getClass().getResource("/it/sylwiabrant/weather_app/Icons/gauge.png");
+            Image img2 = new Image(String.valueOf(path2),25, 20, false, false);
+            ImageView imgView2 = new ImageView(img2);
+            forecastGrid.add(imgView2,2*day,1);
+
+            URL path3 = this.getClass().getResource("/it/sylwiabrant/weather_app/Icons/wind.png");
+            Image img3 = new Image(String.valueOf(path3),25, 25, false, false);
+            ImageView imgView3 = new ImageView(img3);
+            forecastGrid.add(imgView3,2*day,2);
+
+            URL path4 = this.getClass().getResource("/it/sylwiabrant/weather_app/Icons/humidity.png");
+            Image img4 = new Image(String.valueOf(path4),25, 25, false, false);
+            ImageView imgView4 = new ImageView(img4);
+            forecastGrid.add(imgView4,2*day,3);
+
+            URL path5 = this.getClass().getResource("/it/sylwiabrant/weather_app/Icons/water.png");
+            Image img5 = new Image(String.valueOf(path5),20, 20, false, false);
+            ImageView imgView5 = new ImageView(img5);
+            forecastGrid.add(imgView5,2*day,4);
+
         }
     }
  /*   private void setWeatherIcon(String conditions, int day){

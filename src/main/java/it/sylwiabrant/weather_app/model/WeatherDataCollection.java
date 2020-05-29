@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import it.sylwiabrant.weather_app.controller.WeatherFetcherService;
+import javafx.scene.image.ImageView;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -68,7 +69,6 @@ public class WeatherDataCollection {
 
 //            cond.setDescription(jsonObject.getAsJsonArray("weather").getAsJsonObject().get("main").getAsString());
             cond.setCurrentTemp(day.getAsJsonObject("main").get("temp").getAsDouble());
-            System.out.println(cond.getCurrentTemp());
             cond.setPressure(day.getAsJsonObject("main").get("pressure").getAsDouble());
             cond.setHumidity(day.getAsJsonObject("main").get("humidity").getAsDouble());
             cond.setWindSpeed(day.getAsJsonObject("wind").get("speed").getAsDouble());
