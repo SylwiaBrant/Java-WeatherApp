@@ -22,8 +22,7 @@ public class ViewFactory {
 
     public void showWeatherView() throws IOException {
         WeatherViewController controller = new WeatherViewController(weatherData,this,"/it/sylwiabrant" +
-                "/weather_app" +
-                "/MainWindowFXML.fxml");
+                "/weather_app/FXML/MainWindowFXML.fxml");
         initializeStage(controller);
     }
 
