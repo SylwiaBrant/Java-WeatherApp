@@ -1,98 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.image.Image?>
-<AnchorPane prefHeight="480.0" prefWidth="660.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="596.0" prefWidth="745.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="currentIcon" fitHeight="257.0" fitWidth="457.0" layoutX="5.0" layoutY="4.0"
-                 pickOnBounds="true" preserveRatio="true">
-      </ImageView>
-      <HBox fx:id="locationsMenu" prefHeight="40.0" prefWidth="660.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Label fx:id="tempLabel" alignment="CENTER" layoutX="121.0" layoutY="139.0" prefHeight="54.0" prefWidth="133.0" text="Temp" textAlignment="CENTER" wrapText="true">
-         <font>
-            <Font size="32.0" />
-         </font>
-      </Label>
-      <Label fx:id="locationLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="26.0" layoutY="55.0" prefHeight="48.0" prefWidth="322.0" text="Location" textAlignment="CENTER" wrapText="true">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label fx:id="windChillLabel" alignment="CENTER" layoutX="127.0" layoutY="226.0" prefHeight="27.0" prefWidth="133.0" text="WindChill" textAlignment="CENTER">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="340.0" layoutY="90.0" text="Opady:">
+      <Label fx:id="locationLabel1" contentDisplay="CENTER" layoutX="113.0" layoutY="7.0" prefHeight="27.0" prefWidth="234.0" text="Location" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="340.0" layoutY="150.0" text="Ciśnienie:">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="340.0" layoutY="180.0" text="Wilgotność:">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="downfallLabel" layoutX="460.0" layoutY="90.0" prefHeight="17.0" prefWidth="80.0" styleClass="result" stylesheets="@style.css" text="Label">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="pressureLabel" layoutX="460.0" layoutY="150.0" prefHeight="17.0" prefWidth="80.0" styleClass="result" stylesheets="@style.css" text="Label">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="humidityLabel" layoutX="460.0" layoutY="180.0" prefHeight="17.0" prefWidth="80.0" styleClass="result" stylesheets="@style.css" text="Label">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="340.0" layoutY="120.0" text="Wiatr:">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="windLabel" layoutX="460.0" layoutY="120.0" prefHeight="17.0" prefWidth="80.0" styleClass="result" stylesheets="@style.css" text="Label">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="340.0" layoutY="210.0" prefHeight="25.0" prefWidth="116.0" text="Zachmurzenie:">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="cloudsLabel" layoutX="460.0" layoutY="210.0" prefHeight="17.0" prefWidth="80.0" styleClass="result" stylesheets="@style.css" text="Label">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="340.0" layoutY="240.0" prefHeight="25.0" prefWidth="116.0" text="Widoczność:">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="visibilityLabel" layoutX="460.0" layoutY="240.0" prefHeight="17.0" prefWidth="80.0" styleClass="result" stylesheets="@style.css" text="Label">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <GridPane fx:id="forecastGrid" alignment="CENTER" hgap="10.0" layoutY="348.0" prefHeight="125.0" prefWidth="660.0">
+      <GridPane fx:id="forecastGrid1" alignment="CENTER" hgap="10.0" layoutY="180.0" prefHeight="125.0" prefWidth="660.0">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" percentWidth="0.0" prefWidth="25.0" />
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
@@ -104,37 +30,242 @@
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="44.0" minHeight="25.0" percentHeight="0.0" prefHeight="39.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="30.0" minHeight="15.0" prefHeight="23.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="33.0" minHeight="20.0" prefHeight="23.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="25.0" minHeight="17.0" percentHeight="0.0" prefHeight="20.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </GridPane>
+      <GridPane fx:id="forecastGrid2" alignment="CENTER" hgap="10.0" layoutX="73.0" layoutY="471.0" prefHeight="125.0" prefWidth="660.0">
+         <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" percentWidth="0.0" prefWidth="25.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" percentWidth="0.0" prefWidth="25.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" percentWidth="0.0" prefWidth="25.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" percentWidth="0.0" prefWidth="25.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+         </columnConstraints>
+         <rowConstraints>
             <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+            <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <padding>
             <Insets left="10.0" right="10.0" />
          </padding>
+      </GridPane>
+      <Label fx:id="locationLabel2" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="395.0" layoutY="325.0" prefHeight="27.0" prefWidth="244.0" text="Location" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <GridPane fx:id="currentConds1" hgap="5.0" layoutX="7.0" layoutY="44.0" prefHeight="120.0" prefWidth="697.0">
+        <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="83.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="122.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="60.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="60.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="173.0" minWidth="10.0" prefWidth="60.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="189.0" minWidth="10.0" prefWidth="60.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="189.0" minWidth="10.0" prefWidth="60.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="189.0" minWidth="10.0" prefWidth="60.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="24.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="51.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="currentIcon11" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
-            <ImageView fx:id="currentIcon1" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
-            <ImageView fx:id="currentIcon13" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3" />
-            <ImageView fx:id="currentIcon12" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4" />
-            <ImageView fx:id="currentIcon14" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" />
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="3" />
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+            <Label alignment="CENTER" prefHeight="21.0" prefWidth="76.0" text="Opady" GridPane.columnIndex="2">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="21.0" prefWidth="70.0" text="Ciśnienie" GridPane.columnIndex="3">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="21.0" prefWidth="72.0" text="Wiatr" GridPane.columnIndex="4">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="21.0" prefWidth="71.0" text="Wilgotność" GridPane.columnIndex="5">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="21.0" prefWidth="73.0" text="Zachmurzenie" GridPane.columnIndex="6">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="21.0" prefWidth="71.0" text="Widoczność" GridPane.columnIndex="7">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_CENTER" prefHeight="21.0" prefWidth="73.0" text="mm" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label alignment="TOP_CENTER" prefHeight="21.0" prefWidth="73.0" text="hPa" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Label alignment="TOP_CENTER" prefHeight="21.0" prefWidth="80.0" text="m/s" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <Label alignment="TOP_CENTER" prefHeight="21.0" prefWidth="73.0" text="\%" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <Label alignment="TOP_CENTER" prefHeight="21.0" prefWidth="73.0" text="\%" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+            <Label alignment="TOP_CENTER" prefHeight="21.0" prefWidth="72.0" text="m" GridPane.columnIndex="7" GridPane.rowIndex="3" />
+            <ImageView fitHeight="35.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../Icons/pressure.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fitHeight="36.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../Icons/humidity.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="39.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../Icons/wind.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="43.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../Icons/vi.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="28.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../Icons/cloudiness.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="37.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../Icons/downfall.png" />
+               </image>
+            </ImageView>
          </children>
+         <opaqueInsets>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </opaqueInsets>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </GridPane>
+      <Button fx:id="change1LocBtn" layoutX="7.0" layoutY="7.0" mnemonicParsing="false" onAction="#change1LocAction" prefHeight="27.0" prefWidth="55.0" text="Zmień" />
+      <ImageView fitHeight="27.0" fitWidth="28.0" layoutX="71.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Icons/loc.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="27.0" fitWidth="28.0" layoutX="645.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Icons/loc.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="change2LocBtn" layoutX="681.0" layoutY="325.0" mnemonicParsing="false" onAction="#change2LocAction" prefHeight="27.0" prefWidth="55.0" text="Zmień" />
+      <GridPane fx:id="currentConds2" hgap="5.0" layoutX="24.0" layoutY="365.0" prefHeight="120.0" prefWidth="697.0">
+         <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="83.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="122.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="60.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="60.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="173.0" minWidth="10.0" prefWidth="60.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="189.0" minWidth="10.0" prefWidth="60.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="189.0" minWidth="10.0" prefWidth="60.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="189.0" minWidth="10.0" prefWidth="60.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="24.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="51.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label alignment="CENTER" prefHeight="21.0" prefWidth="76.0" text="Opady" GridPane.columnIndex="2">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="21.0" prefWidth="70.0" text="Ciśnienie" GridPane.columnIndex="3">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="21.0" prefWidth="72.0" text="Wiatr" GridPane.columnIndex="4">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="21.0" prefWidth="71.0" text="Wilgotność" GridPane.columnIndex="5">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="21.0" prefWidth="73.0" text="Zachmurzenie" GridPane.columnIndex="6">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="21.0" prefWidth="71.0" text="Widoczność" GridPane.columnIndex="7">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_CENTER" prefHeight="21.0" prefWidth="73.0" text="mm" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label alignment="TOP_CENTER" prefHeight="21.0" prefWidth="73.0" text="hPa" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Label alignment="TOP_CENTER" prefHeight="21.0" prefWidth="80.0" text="m/s" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <Label alignment="TOP_CENTER" prefHeight="21.0" prefWidth="73.0" text="\%" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <Label alignment="TOP_CENTER" prefHeight="21.0" prefWidth="73.0" text="\%" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+            <Label alignment="TOP_CENTER" prefHeight="21.0" prefWidth="72.0" text="m" GridPane.columnIndex="7" GridPane.rowIndex="3" />
+            <ImageView fitHeight="35.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../Icons/pressure.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fitHeight="36.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../Icons/humidity.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="39.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../Icons/wind.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="43.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../Icons/vi.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="28.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../Icons/cloudiness.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="37.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../Icons/downfall.png" />
+               </image>
+            </ImageView>
+         </children>
+         <opaqueInsets>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </opaqueInsets>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
       </GridPane>
    </children>
 </AnchorPane>

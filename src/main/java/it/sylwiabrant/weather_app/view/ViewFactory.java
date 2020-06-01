@@ -27,7 +27,6 @@ public class ViewFactory {
     }
 
     private void initializeStage(WeatherViewController controller) {
-        System.out.println(getClass().getResource(controller.getFxmlName()));
         System.out.println("Inicjalizacja view w ViewFactory.");
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(controller.getFxmlName()));
         fxmlLoader.setController(controller);
@@ -39,7 +38,7 @@ public class ViewFactory {
             return;
         }
         Scene scene = new Scene(parent);
-        scene.getStylesheets().add(getClass().getResource("/it/sylwiabrant/weather_app/style.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/it/sylwiabrant/weather_app/Styles/style.css").toExternalForm());
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
