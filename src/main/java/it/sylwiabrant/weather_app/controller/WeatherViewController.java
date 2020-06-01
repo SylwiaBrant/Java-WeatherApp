@@ -1,19 +1,23 @@
 package it.sylwiabrant.weather_app.controller;
 
 import it.sylwiabrant.weather_app.model.CurrentWeather;
+import it.sylwiabrant.weather_app.model.ForecastWeather;
+import it.sylwiabrant.weather_app.model.WeatherConditions;
 import it.sylwiabrant.weather_app.model.WeatherDataCollection;
 import it.sylwiabrant.weather_app.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -24,40 +28,38 @@ import java.util.ResourceBundle;
 public class WeatherViewController implements Initializable {
 
     @FXML
-    private ImageView currentIcon;
+    private Label locationLabel1;
 
     @FXML
-    private HBox locationsMenu;
+    private GridPane forecastGrid1;
 
     @FXML
-    private Label tempLabel;
+    private GridPane forecastGrid2;
 
     @FXML
-    private Label locationLabel;
+    private Label locationLabel2;
 
     @FXML
-    private Label windChillLabel;
+    private GridPane currentConds1;
 
     @FXML
-    private Label downfallLabel;
+    private Button change1LocBtn;
 
     @FXML
-    private Label pressureLabel;
+    private Button change2LocBtn;
 
     @FXML
-    private Label humidityLabel;
+    private GridPane currentConds2;
 
     @FXML
-    private Label windLabel;
+    void change1LocAction() {
+
+    }
 
     @FXML
-    private Label cloudsLabel;
+    void change2LocAction() {
 
-    @FXML
-    private Label visibilityLabel;
-
-    @FXML
-    private GridPane forecastGrid;
+    }
 
     private WeatherDataCollection weatherData;
     private ViewFactory viewFactory;
@@ -68,95 +70,98 @@ public class WeatherViewController implements Initializable {
         this.viewFactory = viewFactory;
         this.fxmlName = fxmlName;
     }
-    
-    public void setCurrentWeatherView() throws IOException {
-        CurrentWeather cond = weatherData.getCityWeather();
-     //   System.out.println(cond.getCurrentTemp());
-     //   System.out.println(cond.getHumidity());
-                 /*   URL path = this.getClass().getResource("/it/sylwiabrant/weather_app/Icons/water.png");
-            Image img = new Image(String.valueOf(path),20, 20, false, false);
-            ImageView imgView = new ImageView(img);
-            forecastGrid.add(imgView,i,0);*/
-        locationLabel.setText(cond.getCity() + ", " + cond.getCountry());
-        tempLabel.setText(String.valueOf(cond.getCurrentTemp()) + " °C");
-        windChillLabel.setText(String.valueOf(cond.getWindChill()) + " °C");
-        pressureLabel.setText(String.valueOf(cond.getPressure()) + " hPa");
-        windLabel.setText(String.valueOf(cond.getWindSpeed()) + " m/s");
-        humidityLabel.setText(String.valueOf(cond.getHumidity()) + " %");
-        visibilityLabel.setText(String.valueOf(cond.getVisibility()) + " m");
-        cloudsLabel.setText(String.valueOf(cond.getClouds()) + " %");
-        currentIcon.getImage();
+
+    private void setUpWeatherData() throws IOException {
+        WeatherFetcherService weatherFetcherService = new WeatherFetcherService(weatherData);
+        weatherFetcherService.fetchCurrentWeather("LondonCurrent.json");
+        weatherFetcherService.fetchCurrentWeather("FlorenceCurrent.json");
+        weatherFetcherService.fetchWeatherForecast("LondonForecast.json");
+        weatherFetcherService.fetchWeatherForecast("FlorenceForecast.json");
     }
 
-    public void setWeatherForecast() throws IOException {
-        ArrayList<CurrentWeather> forecast = weatherData.getCityForecast();
-        int i = 1;
-        for(CurrentWeather cond : forecast){
-         //   System.out.println(cond.getCurrentTemp();
+    public void setCurrentWeatherView() throws IOException {
+        ArrayList<CurrentWeather> currentWeathers = weatherData.getCurrentWeathers();
+        setWeatherPerCity(currentWeathers.get(0), currentConds1, locationLabel1);
+        setWeatherPerCity(currentWeathers.get(1), currentConds2, locationLabel2);
+    }
 
-            forecastGrid.add(new Label(String.valueOf(cond.getCurrentTemp()) + " °C"),i,0);
-            forecastGrid.add(new Label(String.valueOf(cond.getPressure()) + " hPa"),i,1);
-            forecastGrid.add(new Label(String.valueOf(cond.getWindSpeed()) + " m/s"),i,2);
-            forecastGrid.add(new Label(String.valueOf(cond.getHumidity()) + " %"),i,3);
-            forecastGrid.add(new Label(String.valueOf(cond.getClouds()) + " %"),i,4);
+    public void setForecastView() throws IOException {
+        ArrayList<ArrayList<ForecastWeather>> forecasts = weatherData.getForecasts();
+        setForecastPerCity(forecasts.get(0), forecastGrid1);
+        setForecastPerCity(forecasts.get(1), forecastGrid2);
+    }
+
+    private void setWeatherPerCity(CurrentWeather conditions, GridPane gridPane, Label label){
+        label.setText(conditions.getCity() + ", " + conditions.getCountry());
+        Label tempLabel = new Label(String.valueOf(conditions.getTemp()) + " °C");
+        tempLabel.getStyleClass().add("currentTempLabel");
+        Label windChillLabel = new Label(String.valueOf(conditions.getWindChill()) + " °C");
+        windChillLabel.getStyleClass().add("windChillLabel");
+
+        gridPane.add(new ImageView(new Image(getConditionsIcon(conditions.getDescription()),100, 100, false,
+                        false))
+                ,0,1,1,2);
+        gridPane.add(tempLabel,1,0,1,2);
+        gridPane.add(windChillLabel,1,2,1,2);
+        gridPane.add(new Label(String.valueOf(conditions.getPressure())),2,2);
+        gridPane.add(new Label(String.valueOf(conditions.getWindSpeed())),3,2);
+        gridPane.add(new Label(String.valueOf(conditions.getHumidity())),4,2);
+        gridPane.add(new Label(String.valueOf(conditions.getClouds())),5,2);
+        gridPane.add(new Label(String.valueOf(conditions.getVisibility())),6,2);
+    }
+
+    public void setForecastPerCity(ArrayList<ForecastWeather> forecast, GridPane gridPane) throws IOException {
+        int i = 1;
+        for(WeatherConditions cond : forecast){
+            //   forecastGrid1.add(new Label(String.valueOf(cond.getDescription())),i,1);
+            gridPane.add(new ImageView(new Image(getConditionsIcon(cond.getDescription()),40,
+                    40,
+                    false,
+                    false)),i,0);
+            gridPane.add(new Label(String.valueOf(cond.getTemp()) + " °C"),i,1);
+            gridPane.add(new Label(String.valueOf(cond.getPressure()) + " hPa"),i,2);
+            gridPane.add(new Label(String.valueOf(cond.getWindSpeed()) + " m/s"),i,3);
             i+=2;
         }
-        addIconsToForecast();
     }
 
-    private void addIconsToForecast() {
-        for(int day=0; day < 4; day++){
-            URL path1 = this.getClass().getResource("/it/sylwiabrant/weather_app/Icons/temp.png");
-            Image img1 = new Image(String.valueOf(path1),25, 25, false, false);
-            ImageView imgView1 = new ImageView(img1);
-            forecastGrid.add(imgView1,2*day,0);
-
-            URL path2 = this.getClass().getResource("/it/sylwiabrant/weather_app/Icons/gauge.png");
-            Image img2 = new Image(String.valueOf(path2),25, 20, false, false);
-            ImageView imgView2 = new ImageView(img2);
-            forecastGrid.add(imgView2,2*day,1);
-
-            URL path3 = this.getClass().getResource("/it/sylwiabrant/weather_app/Icons/wind.png");
-            Image img3 = new Image(String.valueOf(path3),25, 25, false, false);
-            ImageView imgView3 = new ImageView(img3);
-            forecastGrid.add(imgView3,2*day,2);
-
-            URL path4 = this.getClass().getResource("/it/sylwiabrant/weather_app/Icons/humidity.png");
-            Image img4 = new Image(String.valueOf(path4),25, 25, false, false);
-            ImageView imgView4 = new ImageView(img4);
-            forecastGrid.add(imgView4,2*day,3);
-
-            URL path5 = this.getClass().getResource("/it/sylwiabrant/weather_app/Icons/water.png");
-            Image img5 = new Image(String.valueOf(path5),20, 20, false, false);
-            ImageView imgView5 = new ImageView(img5);
-            forecastGrid.add(imgView5,2*day,4);
-
-        }
-    }
- /*   private void setWeatherIcon(String conditions, int day){
+    private String getConditionsIcon(String conditions){
+        String imgPath;
         switch (conditions){
-            case "clear sky":
-                currentIcon.getImage();
-            case "few clouds":
-            case "scattered clouds":
-            case "broken clouds":
-            case "shower rain":
-            case "thunderstorm":
-            case "snow":
-            case "mist":
+            case "Clear":
+                imgPath = "/it/sylwiabrant/weather_app/Icons/sun.png";
+                break;
+            case "Clouds":
+                imgPath = "/it/sylwiabrant/weather_app/Icons/clouds.png";
+                break;
+            case "Rain":
+            case "Drizzle":
+                imgPath = "/it/sylwiabrant/weather_app/Icons/rain.png";
+                break;
+            case "Thunderstorm":
+                imgPath = "/it/sylwiabrant/weather_app/Icons/storm.png";
+                break;
+            case "Snow":
+                imgPath = "/it/sylwiabrant/weather_app/Icons/snow.png";
+                break;
+            case "Mist":
+            case "Fog":
+            case "Haze":
+                imgPath = "/it/sylwiabrant/weather_app/Icons/mist.png";
+                break;
             default:
+               imgPath = "/it/sylwiabrant/weather_app/Icons/clouds.png";
         }
-    }*/
+        return String.valueOf(this.getClass().getResource(imgPath));
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             System.out.println("Inicjalizacja WeatherViewController.");
-            WeatherFetcherService weatherFetcherService = new WeatherFetcherService(weatherData);
-            weatherFetcherService.fetchCurrentWeather();
-            weatherFetcherService.fetchWeatherForecast();
+            setUpWeatherData();
             setCurrentWeatherView();
-            setWeatherForecast();
+            setForecastView();
         } catch (Exception e) {
             e.printStackTrace();
         }

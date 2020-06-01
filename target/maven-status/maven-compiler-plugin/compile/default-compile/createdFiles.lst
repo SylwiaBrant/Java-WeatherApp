@@ -1,8 +1,7 @@
+it\sylwiabrant\weather_app\controller\WeatherFetcherService.class
+it\sylwiabrant\weather_app\model\CurrentWeather.class
+it\sylwiabrant\weather_app\App.class
 it\sylwiabrant\weather_app\view\ViewFactory.class
 module-info.class
 it\sylwiabrant\weather_app\model\WeatherDataCollection.class
-it\sylwiabrant\weather_app\controller\WeatherFetcherService.class
-it\sylwiabrant\weather_app\controller\WeatherFetcherService$1.class
-it\sylwiabrant\weather_app\model\CurrentWeather.class
-it\sylwiabrant\weather_app\App.class
 it\sylwiabrant\weather_app\controller\WeatherViewController.class

@@ -3,16 +3,12 @@ AnchorPane{
     -fx-background: rgb(26, 29, 38);
 }
 
-.split-pane:horizontal{
-   -fx-background-color: rgb(35, 39, 49);
-}
-
-.split-pane-divider{
-   -fx-background-color: rgb(26, 29, 38);
-}
-
-.result{
+.currentTempLabel{
+    -fx-font-size: 32px;
     -fx-font-weight: bold;
 }
 
-
+.windChillLabel{
+    -fx-font-size: 22;
+    -fx-font-weight: bold;
+}
