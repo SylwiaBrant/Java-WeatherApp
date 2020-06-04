@@ -2,7 +2,7 @@ AnchorPane{
     -fx-background-color: linear-gradient(to bottom right, rgb(87,44,127), rgb(49,147,188));
     -fx-background: rgb(26, 29, 38);
 }
-
+/*
 #forecastGrid1, #forecastGrid2{
     -fx-background-color: white;
 }
@@ -19,18 +19,7 @@ AnchorPane{
 #forecastGrid1 Label, #forecastGrid2 Label{
     -fx-text-fill: rgb(90, 90, 90);
 }
-
-.split-pane:horizontal{
-   -fx-background-color: rgb(35, 39, 49);
-}
-
-.split-pane-divider{
-   -fx-background-color: rgb(26, 29, 38);
-}
-
-.result{
-    -fx-font-weight: bold;
-}
+*/
 
 .currentTempLabel{
     -fx-font-size: 38px;
@@ -38,6 +27,20 @@ AnchorPane{
 
 .windChillLabel{
     -fx-font-size: 22px;
+}
+
+.forecastTempLabel{
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+}
+
+Button{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+Button.hover{
+    -fx-underline: true;
 }
 
 

@@ -1,11 +1,13 @@
 package it.sylwiabrant.weather_app.model;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import it.sylwiabrant.weather_app.controller.WeatherFetcherService;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
-import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Sylwia Brant
@@ -22,50 +24,62 @@ public class WeatherDataCollection {
         System.out.println("Tworzenie WeatherDataCollection.");
     }
 
-    public void loadCurrentData(JsonObject jsonObject) {
+    public void loadCurrentData(JSONObject jsonObject) {
       //  System.out.println("ładowanie danych do WeatherDataCollection.");
-      //  System.out.println(jsonObject);
         CurrentWeather cond = new CurrentWeather();
-        cond.setCity(jsonObject.get("name").getAsString());
-        System.out.println(cond.getCity());
-        JsonArray arr = jsonObject.getAsJsonArray("weather");
-
-        for(int i = 0; i < arr.size(); i++){
-            JsonObject obj1 = (JsonObject) arr.get(i);
-            cond.setDescription(obj1.get("main").getAsString());
-        }
-        //  cond.setDescription(jsonObject.getAsJsonArray("weather").getAsJsonObject().get("main").getAsString());
-        cond.setCountry(jsonObject.getAsJsonObject("sys").get("country").getAsString());
-        cond.setTemp(jsonObject.getAsJsonObject("main").get("temp").getAsDouble());
-        cond.setWindChill(jsonObject.getAsJsonObject("main").get("feels_like").getAsDouble());
-        cond.setPressure(jsonObject.getAsJsonObject("main").get("pressure").getAsDouble());
-        cond.setHumidity(jsonObject.getAsJsonObject("main").get("humidity").getAsDouble());
-        cond.setWindSpeed(jsonObject.getAsJsonObject("wind").get("speed").getAsDouble());
-        cond.setWindDirection(jsonObject.getAsJsonObject("wind").get("deg").getAsDouble());
-        cond.setVisibility(jsonObject.get("visibility").getAsInt());
-        cond.setClouds(jsonObject.getAsJsonObject("clouds").get("all").getAsInt());
+        cond.setCity(jsonObject.get("name").toString());
+        cond.setDescription(jsonObject.getJSONArray("weather").getJSONObject(0).get("main").toString());
+        cond.setDescription(jsonObject.getJSONArray("weather").getJSONObject(0).get("description").toString());
+        cond.setCountry(jsonObject.getJSONObject("sys").get("country").toString());
+        cond.setTemp(((Number)jsonObject.getJSONObject("main").get("temp")).doubleValue());
+        cond.setWindChill(jsonObject.getJSONObject("main").get("feels_like").toString());
+        cond.setPressure(jsonObject.getJSONObject("main").get("pressure").toString());
+        cond.setHumidity(jsonObject.getJSONObject("main").get("humidity").toString());
+        cond.setWindSpeed(jsonObject.getJSONObject("wind").get("speed").toString());
+        cond.setWindDirection(((Number) jsonObject.getJSONObject("wind").get("deg")).intValue());
+     //   cond.setVisibility(jsonObject.get("visibility").toString());
+     //   cond.setClouds(jsonObject.getAsJsonObject("clouds").get("all").getAsInt());
         System.out.println(cond);
         currentWeatherList.add(cond);
     }
 
-    public void loadForecast(JsonArray arr) throws IOException {
+    public void loadForecast(JSONArray jsonArray) throws IOException {
         ArrayList<ForecastWeather> forecasts = new ArrayList<ForecastWeather>();
-        for(int i = 1; i < 5; i++){
-            ForecastWeather cond = new ForecastWeather();
-            JsonObject day = (JsonObject)arr.get(i);
-            JsonArray arr1 = day.getAsJsonArray("weather");
+        double tempTemp, minTemp, maxTemp, rain, snow;
+        int windDirection;
+        String description = "", pressure ="", windSpeed="";
 
-            JsonObject obj1 = (JsonObject) arr1.get(0);
-            cond.setDescription(obj1.get("main").getAsString());
+        for(int i = 0; i < 40; i++){
+            minTemp=100; maxTemp=-100; windDirection = 0; rain = 0; snow = 0;
 
-//            cond.setDescription(jsonObject.getAsJsonArray("weather").getAsJsonObject().get("main").getAsString());
-            cond.setTemp(day.getAsJsonObject("main").get("temp").getAsDouble());
-            cond.setPressure(day.getAsJsonObject("main").get("pressure").getAsDouble());
-            cond.setWindSpeed(day.getAsJsonObject("wind").get("speed").getAsDouble());
-            cond.setWindDirection(day.getAsJsonObject("wind").get("deg").getAsDouble());
-            cond.setClouds(day.getAsJsonObject("clouds").get("all").getAsInt());
+            JSONObject day = (JSONObject)jsonArray.get(i);
+            JSONArray arr1 = day.getJSONArray("weather");
+            JSONObject obj1 = (JSONObject) arr1.get(0);
 
-            forecasts.add(cond);
+            tempTemp = ((Number) day.getJSONObject("main").get("temp")).doubleValue();
+            if(tempTemp < minTemp)
+                minTemp = tempTemp;
+            if(tempTemp > maxTemp)
+                maxTemp = tempTemp;
+
+            if(i % 6 == 0){
+                pressure = day.getJSONObject("main").get("pressure").toString();
+                windSpeed = day.getJSONObject("wind").get("speed").toString();
+                windDirection = ((Number) day.getJSONObject("wind").get("deg")).intValue();
+            }
+
+            if(i % 8 == 0){
+                ForecastWeather cond = new ForecastWeather();
+                cond.setMaxTemp(maxTemp);
+                cond.setMinTemp(minTemp);
+                cond.setDate(extractDate(((Number) day.get("dt")).longValue()));
+                cond.setDescription(description);
+                cond.setPressure(pressure);
+                cond.setWindSpeed(windSpeed);
+                cond.setWindDirection(windDirection);
+
+                forecasts.add(cond);
+            }
         }
         forecastList.add(forecasts);
     }
@@ -76,5 +90,14 @@ public class WeatherDataCollection {
 
     public ArrayList<ArrayList<ForecastWeather>> getForecasts() {
         return forecastList;
+    }
+
+    private String extractDate(long timestamp){
+        Date date = new java.util.Date(timestamp*1000L);
+        // the format of your date
+        SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
+        // give a timezone reference for formatting (see comment at the bottom)
+        sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT-0"));
+        return sdf.format(date);
     }
 }
