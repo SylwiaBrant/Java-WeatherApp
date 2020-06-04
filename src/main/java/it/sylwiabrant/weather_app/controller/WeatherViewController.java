@@ -2,14 +2,10 @@ package it.sylwiabrant.weather_app.controller;
 
 import it.sylwiabrant.weather_app.model.CurrentWeather;
 import it.sylwiabrant.weather_app.model.ForecastWeather;
-import it.sylwiabrant.weather_app.model.WeatherConditions;
 import it.sylwiabrant.weather_app.model.WeatherDataCollection;
 import it.sylwiabrant.weather_app.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -17,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -71,12 +66,24 @@ public class WeatherViewController implements Initializable {
         this.fxmlName = fxmlName;
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            System.out.println("Inicjalizacja WeatherViewController.");
+            setUpWeatherData();
+            setCurrentWeatherView();
+            setForecastView();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void setUpWeatherData() throws IOException {
         WeatherFetcherService weatherFetcherService = new WeatherFetcherService(weatherData);
-        weatherFetcherService.fetchCurrentWeather("LondonCurrent.json");
-        weatherFetcherService.fetchCurrentWeather("FlorenceCurrent.json");
-        weatherFetcherService.fetchWeatherForecast("LondonForecast.json");
-        weatherFetcherService.fetchWeatherForecast("FlorenceForecast.json");
+        weatherFetcherService.fetchCurrentWeather("Londyn");
+        weatherFetcherService.fetchCurrentWeather("Paryż");
+        weatherFetcherService.fetchWeatherForecast("Londyn");
+        weatherFetcherService.fetchWeatherForecast("Paryż");
     }
 
     public void setCurrentWeatherView() throws IOException {
@@ -95,33 +102,36 @@ public class WeatherViewController implements Initializable {
         label.setText(conditions.getCity() + ", " + conditions.getCountry());
         Label tempLabel = new Label(String.valueOf(conditions.getTemp()) + " °C");
         tempLabel.getStyleClass().add("currentTempLabel");
-        Label windChillLabel = new Label(String.valueOf(conditions.getWindChill()) + " °C");
+        Label windChillLabel = new Label("(" + String.valueOf(conditions.getWindChill()) + " °)");
         windChillLabel.getStyleClass().add("windChillLabel");
 
-        gridPane.add(new ImageView(new Image(getConditionsIcon(conditions.getDescription()),100, 100, false,
+        gridPane.add(new ImageView(new Image(getConditionsIcon(conditions.getDescription()),70, 70, false,
                         false))
-                ,0,1,1,2);
-        gridPane.add(tempLabel,1,0,1,2);
-        gridPane.add(windChillLabel,1,2,1,2);
-        gridPane.add(new Label(String.valueOf(conditions.getPressure())),2,2);
-        gridPane.add(new Label(String.valueOf(conditions.getWindSpeed())),3,2);
-        gridPane.add(new Label(String.valueOf(conditions.getHumidity())),4,2);
-        gridPane.add(new Label(String.valueOf(conditions.getClouds())),5,2);
-        gridPane.add(new Label(String.valueOf(conditions.getVisibility())),6,2);
+                ,0,0,1,2);
+        gridPane.add(tempLabel,1,0,2,1);
+        gridPane.add(windChillLabel,1,1,2,1);
+        gridPane.add(new Label(conditions.getPressure()),1,4);
+        gridPane.add(new Label(conditions.getWindSpeed()),1,5);
+        gridPane.add(new Label(conditions.getHumidity()),1,6);
+        gridPane.add(new Label(String.valueOf(conditions.getClouds())),1,7);
+        gridPane.add(new Label(String.valueOf(conditions.getVisibility())),1,8);
     }
 
     public void setForecastPerCity(ArrayList<ForecastWeather> forecast, GridPane gridPane) throws IOException {
-        int i = 1;
-        for(WeatherConditions cond : forecast){
-            //   forecastGrid1.add(new Label(String.valueOf(cond.getDescription())),i,1);
+        int i = 0;
+        for(ForecastWeather cond : forecast){
+            gridPane.add(new Label(String.valueOf(cond.getDate())),i,0);
             gridPane.add(new ImageView(new Image(getConditionsIcon(cond.getDescription()),40,
                     40,
                     false,
-                    false)),i,0);
-            gridPane.add(new Label(String.valueOf(cond.getTemp()) + " °C"),i,1);
-            gridPane.add(new Label(String.valueOf(cond.getPressure()) + " hPa"),i,2);
-            gridPane.add(new Label(String.valueOf(cond.getWindSpeed()) + " m/s"),i,3);
-            i+=2;
+                    false)),i,1);
+            Label tempLabel = new Label(cond.getMaxTemp() + " °C / " + cond.getMinTemp() + " °C");
+            tempLabel.getStyleClass().add("forecastTempLabel");
+            gridPane.add(tempLabel,i,2);
+            gridPane.add(new Label(cond.getPressure() + " hPa"),i,3);
+            gridPane.add(new Label(String.valueOf(windDirToLetters(cond.getWindDirection()) + " " + cond.getWindSpeed()) + " " +
+                    "m/s"),i,4);
+            i++;
         }
     }
 
@@ -155,16 +165,17 @@ public class WeatherViewController implements Initializable {
         return String.valueOf(this.getClass().getResource(imgPath));
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            System.out.println("Inicjalizacja WeatherViewController.");
-            setUpWeatherData();
-            setCurrentWeatherView();
-            setForecastView();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private String windDirToLetters(double deg) {
+        if (deg >= 0.0 && deg < 22.5) return "N";
+        if (deg >= 337.5 && deg < 360) return "N";
+        if (deg >= 22.5 && deg < 67.5) return "NE";
+        if (deg >= 67.5 && deg < 112.5) return "E";
+        if (deg >= 112.5 && deg < 157.5) return "SE";
+        if (deg >= 157.5 && deg < 202.5) return "S";
+        if (deg >= 202.5 && deg < 247.5) return "SW";
+        if (deg >= 247.5 && deg < 292.5) return "W";
+        if (deg >= 292.5 && deg < 337.5) return "NW";
+        return "?";
     }
 
     public String getFxmlName() {

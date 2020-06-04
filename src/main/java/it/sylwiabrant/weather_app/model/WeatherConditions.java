@@ -6,7 +6,22 @@ package it.sylwiabrant.weather_app.model;
 public abstract class WeatherConditions {
     private String city;
     private String country;
+    private String main;
     private String description;
+    private String date;
+    private String pressure;
+    private String windSpeed;
+    private int windDirection;
+    private double snow;
+    private double rain;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public String getCity() {
         return city;
@@ -32,44 +47,28 @@ public abstract class WeatherConditions {
         this.description = description;
     }
 
-    public double getTemp() {
-        return temp;
-    }
-
-    public void setTemp(double temp) {
-        this.temp = temp;
-    }
-
-    public double getPressure() {
+    public String getPressure() {
         return pressure;
     }
 
-    public void setPressure(double pressure) {
+    public void setPressure(String pressure) {
         this.pressure = pressure;
     }
 
-    public double getWindSpeed() {
+    public String getWindSpeed() {
         return windSpeed;
     }
 
-    public void setWindSpeed(double windSpeed) {
+    public void setWindSpeed(String windSpeed) {
         this.windSpeed = windSpeed;
     }
 
-    public double getWindDirection() {
+    public int getWindDirection() {
         return windDirection;
     }
 
-    public void setWindDirection(double windDirection) {
+    public void setWindDirection(int windDirection) {
         this.windDirection = windDirection;
-    }
-
-    public double getClouds() {
-        return clouds;
-    }
-
-    public void setClouds(double clouds) {
-        this.clouds = clouds;
     }
 
     public double getSnow() {
@@ -87,12 +86,4 @@ public abstract class WeatherConditions {
     public void setRain(double rain) {
         this.rain = rain;
     }
-
-    private double temp;
-    private double pressure;
-    private double windSpeed;
-    private double windDirection;
-    private double clouds;
-    private double snow;
-    private double rain;
 }

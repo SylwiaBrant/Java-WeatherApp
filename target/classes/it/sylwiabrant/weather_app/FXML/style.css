@@ -12,3 +12,8 @@ AnchorPane{
     -fx-font-size: 22;
     -fx-font-weight: bold;
 }
+
+.borderedPane{
+    -fx-border-color: blue ;
+    -fx-border-width: 5 ;
+}
