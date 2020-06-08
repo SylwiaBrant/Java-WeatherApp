@@ -4,22 +4,22 @@ package it.sylwiabrant.weather_app.model;
  * Created by Sylwia Brant
  */
 public class ForecastWeather extends WeatherConditions{
-    private double maxTemp;
-    private double minTemp;
+    private String maxTemp;
+    private String minTemp;
 
-    public double getMaxTemp() {
+    public String getMaxTemp() {
         return maxTemp;
     }
 
-    public void setMaxTemp(double maxTemp) {
-        this.maxTemp = Math.round(maxTemp*2)/2.0;
+    public void setMaxTemp(String maxTemp) {
+        this.maxTemp = maxTemp;
     }
 
-    public double getMinTemp() {
+    public String getMinTemp() {
         return minTemp;
     }
 
-    public void setMinTemp(double minTemp) {
-        this.minTemp = Math.round(minTemp*2)/2.0;
+    public void setMinTemp(String minTemp) {
+        this.minTemp = minTemp;
     }
 }

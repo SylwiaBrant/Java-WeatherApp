@@ -1,6 +1,7 @@
 AnchorPane{
     -fx-background-color: linear-gradient(to bottom right, rgb(87,44,127), rgb(49,147,188));
     -fx-background: rgb(26, 29, 38);
+    -fx-font-size: 14px;
 }
 /*
 #forecastGrid1, #forecastGrid2{
