@@ -71,7 +71,7 @@ public class WeatherViewController implements Initializable {
         try {
             System.out.println("Inicjalizacja WeatherViewController.");
             setUpWeatherData();
-            setCurrentWeatherView();
+        //    setCurrentWeatherView();
             setForecastView();
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,15 +80,15 @@ public class WeatherViewController implements Initializable {
 
     private void setUpWeatherData() throws IOException {
         WeatherFetcherService weatherFetcherService = new WeatherFetcherService(weatherData);
-        weatherFetcherService.fetchCurrentWeather("Londyn");
-        weatherFetcherService.fetchCurrentWeather("Paryż");
+     //   weatherFetcherService.fetchCurrentWeather("Londyn");
+    //    weatherFetcherService.fetchCurrentWeather("Paryż");
         weatherFetcherService.fetchWeatherForecast("Londyn");
         weatherFetcherService.fetchWeatherForecast("Paryż");
     }
 
     public void setCurrentWeatherView() throws IOException {
         ArrayList<CurrentWeather> currentWeathers = weatherData.getCurrentWeathers();
-        setWeatherPerCity(currentWeathers.get(0), currentConds1, locationLabel1);
+     //   setWeatherPerCity(currentWeathers.get(0), currentConds1, locationLabel1);
         setWeatherPerCity(currentWeathers.get(1), currentConds2, locationLabel2);
     }
 
@@ -100,82 +100,59 @@ public class WeatherViewController implements Initializable {
 
     private void setWeatherPerCity(CurrentWeather conditions, GridPane gridPane, Label label){
         label.setText(conditions.getCity() + ", " + conditions.getCountry());
-        Label tempLabel = new Label(String.valueOf(conditions.getTemp()) + " °C");
+        Label tempLabel = new Label(conditions.getTemp() + " °C");
         tempLabel.getStyleClass().add("currentTempLabel");
-        Label windChillLabel = new Label("(" + String.valueOf(conditions.getWindChill()) + " °)");
+        Label windChillLabel = new Label("("+ conditions.getWindChill()+ " °)");
         windChillLabel.getStyleClass().add("windChillLabel");
 
-        gridPane.add(new ImageView(new Image(getConditionsIcon(conditions.getDescription()),70, 70, false,
+        gridPane.add(new ImageView(new Image(conditions.getIcon(),70, 70, false,
                         false))
-                ,0,0,1,2);
-        gridPane.add(tempLabel,1,0,2,1);
-        gridPane.add(windChillLabel,1,1,2,1);
-        gridPane.add(new Label(conditions.getPressure()),1,4);
-        gridPane.add(new Label(conditions.getWindSpeed()),1,5);
-        gridPane.add(new Label(conditions.getHumidity()),1,6);
-        gridPane.add(new Label(String.valueOf(conditions.getClouds())),1,7);
-        gridPane.add(new Label(String.valueOf(conditions.getVisibility())),1,8);
+                ,0,0,2,2);
+        gridPane.add(tempLabel,2,0,2,1);
+        gridPane.add(windChillLabel,2,1,2,1);
+        gridPane.add(new Label(conditions.getDescription()),0,2,4,1);
+
+        String downfall = "0";
+        if(conditions.getRain() != "0")
+            downfall = conditions.getRain();
+        else if (conditions.getSnow() != "0")
+            downfall = conditions.getSnow();
+
+        gridPane.add(new Label(downfall),1,3);
+        gridPane.add(new Label(conditions.getPressure()+" hPa"),3,3);
+        gridPane.add(new Label(conditions.getWindSpeed()+" m/s"),1,4);
+        gridPane.add(new Label(conditions.getHumidity()+" %"),3,4);
+        gridPane.add(new Label(conditions.getClouds()+" %"),1,5);
+        gridPane.add(new Label(conditions.getVisibility()+" m"),3,5);
     }
 
     public void setForecastPerCity(ArrayList<ForecastWeather> forecast, GridPane gridPane) throws IOException {
         int i = 0;
         for(ForecastWeather cond : forecast){
-            gridPane.add(new Label(String.valueOf(cond.getDate())),i,0);
-            gridPane.add(new ImageView(new Image(getConditionsIcon(cond.getDescription()),40,
+            gridPane.add(new Label(cond.getDate()),i,0);
+            gridPane.add(new ImageView(new Image(cond.getIcon(),40,
                     40,
                     false,
                     false)),i,1);
+
+            gridPane.add(new Label(cond.getDescription()),i,2);
             Label tempLabel = new Label(cond.getMaxTemp() + " °C / " + cond.getMinTemp() + " °C");
             tempLabel.getStyleClass().add("forecastTempLabel");
-            gridPane.add(tempLabel,i,2);
-            gridPane.add(new Label(cond.getPressure() + " hPa"),i,3);
-            gridPane.add(new Label(String.valueOf(windDirToLetters(cond.getWindDirection()) + " " + cond.getWindSpeed()) + " " +
-                    "m/s"),i,4);
+
+            String downfall = "0";
+            if(cond.getRain() != "0")
+                downfall = String.valueOf(cond.getRain());
+            else if (cond.getSnow() != "0")
+                downfall = String.valueOf(cond.getSnow());
+
+            gridPane.add(tempLabel,i,3);
+            gridPane.add(new Label(downfall + " mm"),i,4);
+            gridPane.add(new Label(cond.getPressure() + " hPa"),i,5);
+            gridPane.add(new Label(cond.getWindDirection() + " " + cond.getWindSpeed() + " " +
+                    "m/s"),i,6);
+            gridPane.add(new Label(cond.getClouds() + " %"),i,7);
             i++;
         }
-    }
-
-    private String getConditionsIcon(String conditions){
-        String imgPath;
-        switch (conditions){
-            case "Clear":
-                imgPath = "/it/sylwiabrant/weather_app/Icons/sun.png";
-                break;
-            case "Clouds":
-                imgPath = "/it/sylwiabrant/weather_app/Icons/clouds.png";
-                break;
-            case "Rain":
-            case "Drizzle":
-                imgPath = "/it/sylwiabrant/weather_app/Icons/rain.png";
-                break;
-            case "Thunderstorm":
-                imgPath = "/it/sylwiabrant/weather_app/Icons/storm.png";
-                break;
-            case "Snow":
-                imgPath = "/it/sylwiabrant/weather_app/Icons/snow.png";
-                break;
-            case "Mist":
-            case "Fog":
-            case "Haze":
-                imgPath = "/it/sylwiabrant/weather_app/Icons/mist.png";
-                break;
-            default:
-               imgPath = "/it/sylwiabrant/weather_app/Icons/clouds.png";
-        }
-        return String.valueOf(this.getClass().getResource(imgPath));
-    }
-
-    private String windDirToLetters(double deg) {
-        if (deg >= 0.0 && deg < 22.5) return "N";
-        if (deg >= 337.5 && deg < 360) return "N";
-        if (deg >= 22.5 && deg < 67.5) return "NE";
-        if (deg >= 67.5 && deg < 112.5) return "E";
-        if (deg >= 112.5 && deg < 157.5) return "SE";
-        if (deg >= 157.5 && deg < 202.5) return "S";
-        if (deg >= 202.5 && deg < 247.5) return "SW";
-        if (deg >= 247.5 && deg < 292.5) return "W";
-        if (deg >= 292.5 && deg < 337.5) return "NW";
-        return "?";
     }
 
     public String getFxmlName() {

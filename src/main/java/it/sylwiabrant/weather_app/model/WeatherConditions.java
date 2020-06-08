@@ -4,6 +4,7 @@ package it.sylwiabrant.weather_app.model;
  * Created by Sylwia Brant
  */
 public abstract class WeatherConditions {
+    private String icon;
     private String city;
     private String country;
     private String main;
@@ -11,10 +12,18 @@ public abstract class WeatherConditions {
     private String date;
     private String pressure;
     private String windSpeed;
-    private int windDirection;
-    private double snow;
-    private double rain;
+    private String windDirection;
+    private String snow;
+    private String rain;
+    private String clouds;
 
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
     public String getDate() {
         return date;
     }
@@ -37,6 +46,14 @@ public abstract class WeatherConditions {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getMain() {
+        return main;
+    }
+
+    public void setMain(String main) {
+        this.main = main;
     }
 
     public String getDescription() {
@@ -63,27 +80,35 @@ public abstract class WeatherConditions {
         this.windSpeed = windSpeed;
     }
 
-    public int getWindDirection() {
+    public String getWindDirection() {
         return windDirection;
     }
 
-    public void setWindDirection(int windDirection) {
+    public void setWindDirection(String windDirection) {
         this.windDirection = windDirection;
     }
 
-    public double getSnow() {
+    public String getSnow() {
         return snow;
     }
 
-    public void setSnow(double snow) {
+    public void setSnow(String snow) {
         this.snow = snow;
     }
 
-    public double getRain() {
+    public String getRain() {
         return rain;
     }
 
-    public void setRain(double rain) {
+    public void setRain(String rain) {
         this.rain = rain;
+    }
+
+    public String getClouds() {
+        return clouds;
+    }
+
+    public void setClouds(String clouds) {
+        this.clouds = clouds;
     }
 }

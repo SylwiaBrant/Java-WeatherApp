@@ -4,35 +4,29 @@ package it.sylwiabrant.weather_app.model;
  * Created by Sylwia Brant
  */
 public class CurrentWeather extends WeatherConditions{
-    private double temp;
+    private String temp;
     private String windChill;
     private String visibility;
     private String humidity;
-    private double clouds;
+    private String clouds;
 
-    public double getTemp() {
+    public String getTemp() {
         return temp;
     }
 
-    public void setTemp(double temp) {
-        this.temp =  Math.round(temp*2)/2.0;
-    }
+    public void setTemp(String temp) { this.temp = temp; }
 
-    public double getClouds() {
+    public String getClouds() {
         return clouds;
     }
 
-    public void setClouds(double clouds) {
-        this.clouds = clouds;
-    }
+    public void setClouds(String clouds) { this.clouds = clouds; }
 
     public String getWindChill() {
         return windChill;
     }
 
-    public void setWindChill(String windChill) {
-        this.windChill = windChill;
-    }
+    public void setWindChill(String windChill) { this.windChill = windChill; }
 
     public String getVisibility() {
         return visibility;
