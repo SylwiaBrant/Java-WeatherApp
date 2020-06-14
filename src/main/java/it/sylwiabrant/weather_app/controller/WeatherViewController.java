@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Sylwia Brant
  */
-public class WeatherViewController implements Initializable {
+public class WeatherViewController extends BaseController implements Initializable {
 
     @FXML
     private Label locationLabel1;
@@ -56,22 +56,16 @@ public class WeatherViewController implements Initializable {
 
     }
 
-    private WeatherDataCollection weatherData;
-    private ViewFactory viewFactory;
-    private String fxmlName;
-
     public WeatherViewController(WeatherDataCollection weatherData, ViewFactory viewFactory, String fxmlName) {
-        this.weatherData = weatherData;
-        this.viewFactory = viewFactory;
-        this.fxmlName = fxmlName;
+        super(weatherData, viewFactory, fxmlName);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             System.out.println("Inicjalizacja WeatherViewController.");
-            setUpWeatherData();
-        //    setCurrentWeatherView();
+    //        setUpWeatherData();
+            setCurrentWeatherView();
             setForecastView();
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,16 +73,16 @@ public class WeatherViewController implements Initializable {
     }
 
     private void setUpWeatherData() throws IOException {
-        WeatherFetcherService weatherFetcherService = new WeatherFetcherService(weatherData);
-     //   weatherFetcherService.fetchCurrentWeather("Londyn");
-    //    weatherFetcherService.fetchCurrentWeather("Paryż");
+      /*  WeatherFetcherService weatherFetcherService = new WeatherFetcherService(weatherData);
+        weatherFetcherService.fetchCurrentWeather("Londyn");
+        weatherFetcherService.fetchCurrentWeather("Paryż");
         weatherFetcherService.fetchWeatherForecast("Londyn");
-        weatherFetcherService.fetchWeatherForecast("Paryż");
+        weatherFetcherService.fetchWeatherForecast("Paryż");*/
     }
 
     public void setCurrentWeatherView() throws IOException {
         ArrayList<CurrentWeather> currentWeathers = weatherData.getCurrentWeathers();
-     //   setWeatherPerCity(currentWeathers.get(0), currentConds1, locationLabel1);
+        setWeatherPerCity(currentWeathers.get(0), currentConds1, locationLabel1);
         setWeatherPerCity(currentWeathers.get(1), currentConds2, locationLabel2);
     }
 
@@ -153,9 +147,5 @@ public class WeatherViewController implements Initializable {
             gridPane.add(new Label(cond.getClouds() + " %"),i,7);
             i++;
         }
-    }
-
-    public String getFxmlName() {
-        return this.fxmlName;
     }
 }

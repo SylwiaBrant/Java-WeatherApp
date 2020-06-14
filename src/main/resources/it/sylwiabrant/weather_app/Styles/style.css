@@ -37,11 +37,21 @@ AnchorPane{
 
 Button{
     -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-radius: 5;
     -fx-text-fill: white;
 }
 
-Button.hover{
-    -fx-underline: true;
+Button:hover{
+    -fx-border-color: #DEDEDE;
+    -fx-text-fill: #DEDEDE;
 }
 
+Button:active{
+    -fx-border-color: #C4C4C4;
+    -fx-text-fill: #C4C4C4;
+}
 
+#cityField1, #cityField2 {
+    -fx-text-box-border: transparent;
+}

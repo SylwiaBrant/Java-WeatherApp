@@ -1,11 +1,12 @@
 package it.sylwiabrant.weather_app.view;
 
+import it.sylwiabrant.weather_app.controller.BaseController;
+import it.sylwiabrant.weather_app.controller.ChooseTwoCitiesController;
 import it.sylwiabrant.weather_app.controller.WeatherViewController;
 import it.sylwiabrant.weather_app.model.WeatherDataCollection;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.SplitPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -15,18 +16,26 @@ import java.io.IOException;
  */
 public class ViewFactory {
     private WeatherDataCollection weatherData;
+    private boolean weatherViewInitialized = false;
 
     public ViewFactory(WeatherDataCollection weatherData) {
         this.weatherData = weatherData;
     }
 
     public void showWeatherView() throws IOException {
-        WeatherViewController controller = new WeatherViewController(weatherData,this,"/it/sylwiabrant" +
+        BaseController controller = new WeatherViewController(weatherData,this,"/it/sylwiabrant" +
                 "/weather_app/FXML/MainWindowFXML.fxml");
+        initializeStage(controller);
+        weatherViewInitialized = true;
+    }
+
+    public void showChoiceWindow(){
+        BaseController controller = new ChooseTwoCitiesController(weatherData, this, "/it/sylwiabrant/weather_app/FXML" +
+                "/ChooseCitiesFXML.fxml");
         initializeStage(controller);
     }
 
-    private void initializeStage(WeatherViewController controller) {
+    private void initializeStage(BaseController controller) {
         System.out.println("Inicjalizacja view w ViewFactory.");
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(controller.getFxmlName()));
         fxmlLoader.setController(controller);
@@ -42,6 +51,14 @@ public class ViewFactory {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+    }
+
+    public boolean isWeatherViewInitialized() {
+        return weatherViewInitialized;
+    }
+
+    public void closeStage(Stage stage) {
+        stage.close();
     }
 /*
     public void updateView(){
