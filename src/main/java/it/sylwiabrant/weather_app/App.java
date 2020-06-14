@@ -21,9 +21,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        AnchorPane root = new AnchorPane();
         ViewFactory viewFactory = new ViewFactory(new WeatherDataCollection());
-        viewFactory.showWeatherView();
+        viewFactory.showChoiceWindow();
     }
 
 

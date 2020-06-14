@@ -1,39 +1,36 @@
 package it.sylwiabrant.weather_app.model;
 
-import it.sylwiabrant.weather_app.controller.WeatherFetcherService;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.IOException;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 
-/**
- * Created by Sylwia Brant
- */
+/** Created by Sylwia Brant */
 public class WeatherDataCollection {
     private ArrayList<CurrentWeather> currentWeatherList;
     private ArrayList<ArrayList<ForecastWeather>> forecastList;
-    private WeatherFetcherService fetcher;
 
     public WeatherDataCollection() {
         this.currentWeatherList = new ArrayList<CurrentWeather>();
         this.forecastList = new ArrayList<ArrayList<ForecastWeather>>();
-        this.fetcher = new WeatherFetcherService(this);
         System.out.println("Tworzenie WeatherDataCollection.");
     }
 
+    /** Load current weather data to CurrentWeather object and push it into
+     * currentWeatherList. API response provides 40 data sets of every 3h
+     * weather forecast. Extract only data sets for next 4 days: 8 measurement
+     * sets per day
+     * @param JSONArray jsonArray - array of 40 data sets downloaded from API
+     */
     public void loadCurrentData(JSONObject jsonObject) {
       //  System.out.println("ładowanie danych do WeatherDataCollection.");
-        double snow = 0, rain = 0, temp = 0, windChill = 0; int clouds = 0; String windDirection = "";
+        double snow = 0, rain = 0, temp = 0, windChill = 0; int clouds = 0; String windDirection = "", visibility="";
 
         CurrentWeather cond = new CurrentWeather();
 
@@ -54,6 +51,10 @@ public class WeatherDataCollection {
                 rain += ((Number) jsonObject.getJSONObject("rain").get("3h")).doubleValue();
         }
 
+        if(jsonObject.has("visibility")) {
+            visibility = jsonObject.get("visibility").toString();
+        }
+
         if(jsonObject.getJSONObject("wind").has("deg")){
             windDirection = windDirToLetters(((Number) jsonObject.getJSONObject("wind").get("deg")).intValue());
         }
@@ -71,7 +72,7 @@ public class WeatherDataCollection {
         cond.setHumidity(jsonObject.getJSONObject("main").get("humidity").toString());
         cond.setWindSpeed(jsonObject.getJSONObject("wind").get("speed").toString());
         cond.setWindDirection(windDirection);
-        cond.setVisibility(jsonObject.get("visibility").toString());
+        cond.setVisibility(visibility);
         cond.setClouds(String.valueOf(clouds));
         cond.setIcon(getConditionsIcon(cond.getMain(), clouds));
         System.out.println(cond);
@@ -79,25 +80,25 @@ public class WeatherDataCollection {
     }
 
     private String roundDoubleToString(double doubleValue, int decimalPlaces) {
-        String strValue = "";
-     //   DecimalFormat df;
         if (decimalPlaces == 1) {
             DecimalFormat df = new DecimalFormat("#.#");
-            strValue = df.format(doubleValue);
+            return df.format(doubleValue);
         }
         else {
             DecimalFormat df = new DecimalFormat("#.##");
-            strValue = df.format(doubleValue);
+            return df.format(doubleValue);
         }
-        return strValue;
     }
 
+    /** Load forecast weather data to ForecastWeather object and push it into
+    * ForecastList. API response provides 40 data sets of every 3h weather forecast.
+    * Extract only data sets for next 4 days: 8 measurement sets per day
+    * @param jsonArray - array of 40 data sets downloaded from API
+    * @return void
+    */
     public void loadForecast(JSONArray jsonArray) throws IOException {
-        /*API response provides 40 data sets of every 3h weather forecast
-        * Extract only data sets for next 4 days */
         int startingSet = ((24-LocalTime.now().getHour())/3);
         int endingSet = startingSet+(4*8);
-        System.out.println("startingSet=" + startingSet + ", time = "+ LocalTime.now().getHour());
 
         ArrayList<ForecastWeather> forecastsPerCity = new ArrayList<ForecastWeather>();
         while(startingSet != endingSet){
@@ -113,10 +114,16 @@ public class WeatherDataCollection {
         forecastList.add(forecastsPerCity);
     }
 
+    /** From 8 measurements every 3 hours in a day, get highest and lowest temperature,
+    * cumulative rain and snow, rest of required values: pressure, wind speed and direction,
+    * date, icon, conditions description main and detailed for noon and set them on ForecastWeather object.
+    * @param day - array of 8 data sets for 1 whole day
+    * @return ForecastWeather - object containing forecast weather for 1 whole day
+    */
     private ForecastWeather extractDailyConditions(ArrayList<JSONObject> day) {
-        double tempTemp, minTemp = 100, maxTemp = -100, rain = 0.00, snow = 0.00; int clouds= 0; long timestamp = 0;
-        String main = "", description = "", pressure ="", windSpeed="", windDirection="", date="",
-                icon="";
+        double tempTemp, minTemp = 100, maxTemp = -100, rain = 0.00, snow = 0.00; int clouds = 0; long timestamp = 0;
+        String main = "", description = "", pressure = "", windSpeed = "", windDirection = "", date = "",
+                icon = "";
 
         for(int i = 0; i < 8; i++) {
             JSONObject forecastChunk = day.get(i);
@@ -132,7 +139,6 @@ public class WeatherDataCollection {
             }
             if (forecastChunk.has("rain")) {
                 rain += ((Number) forecastChunk.getJSONObject("rain").get("3h")).doubleValue();
-                System.out.println(rain);
             }
             /*get rest of conditions for noon*/
             if (i % 4 == 0) {
@@ -169,14 +175,20 @@ public class WeatherDataCollection {
         return forecast;
     }
 
+    /** @return ArrayList<CurrentWeather> currentWeatherList */
     public ArrayList<CurrentWeather> getCurrentWeathers() {
         return currentWeatherList;
     }
 
+    /** @return ArrayList<ArrayList<CurrentWeather>> forecastList */
     public ArrayList<ArrayList<ForecastWeather>> getForecasts() {
         return forecastList;
     }
-
+    /**
+     * Takes degrees at which wind blows and converts them to intercardinal directions
+     * @param deg - degrees at which wind blows
+     * @return intercardinal direction string
+     */
     private String windDirToLetters(int deg) {
         if (deg >= 0.0 && deg < 22.5) return "N";
         if (deg >= 337.5 && deg < 360) return "N";
@@ -190,6 +202,13 @@ public class WeatherDataCollection {
         return "";
     }
 
+    /**
+     * Takes main description of conditions and cloudiness and returns
+     * corresponding icon path
+     * @param conditions - main description of conditions
+     * @param clouds - cloudiness in %
+     * @return icon path
+     */
     private String getConditionsIcon(String conditions, int clouds){
         String imgPath;
         switch (conditions){
@@ -221,5 +240,16 @@ public class WeatherDataCollection {
                 imgPath = "clouds.png";
         }
         return String.valueOf(this.getClass().getResource("/it/sylwiabrant/weather_app/Icons/"+imgPath));
+    }
+
+    /**
+     * Removes all data from CurrentWeatherList and ForecastList if it's not already empty
+     * @return void
+     */
+    public void removeData() {
+        if(!currentWeatherList.isEmpty())
+            currentWeatherList.clear();
+        if(!forecastList.isEmpty())
+            forecastList.clear();
     }
 }

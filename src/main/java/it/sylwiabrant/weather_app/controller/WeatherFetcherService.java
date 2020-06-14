@@ -1,84 +1,110 @@
 package it.sylwiabrant.weather_app.controller;
 
+import it.sylwiabrant.weather_app.model.CitySearchResult;
 import it.sylwiabrant.weather_app.model.WeatherDataCollection;
-import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 /**
  * Created by Sylwia Brant
  */
-public class WeatherFetcherService{
+public class WeatherFetcherService {
 
     private WeatherDataCollection weatherData;
-    private final String apiKey = "";
+    private static HttpClient client;
+    private final String apiKey = "c8be7af25cecaa14bc28e7439a4a4130";
+
     public WeatherFetcherService(WeatherDataCollection weatherData) {
         this.weatherData = weatherData;
     }
 
-    public void fetchCurrentWeather(String location) throws FileNotFoundException {
-        StringBuilder result = new StringBuilder();
+    public CitySearchResult fetchWeatherData(String location) throws ExecutionException, InterruptedException {
+        client = HttpClient.newHttpClient();
+        List<URI> dataURIs =
+                List.of(
+                        URI.create(getCurrentWeatherLink(location)),
+                        URI.create(getForecastWeatherLink(location)));
         try {
-            URL url = new URL("http://api.openweathermap.org/data/2.5/weather?q="+location+"&appid" +
-                    "=c8be7af25cecaa14bc28e7439a4a4130&units=metric&lang=pl");
-            System.out.println(url);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            InputStream inputStream = conn.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line = "";
+            List<CompletableFuture<String>> futures = dataURIs.stream()
+                    .map(dataURI -> client
+                            .sendAsync(
+                                    HttpRequest.newBuilder(dataURI).GET().build(),
+                                    HttpResponse.BodyHandlers.ofString())
+                            .thenApply(response -> response.body())
+                            .exceptionally(e -> {
+                                throw (RuntimeException) e;
+                            }))
+                    .collect(Collectors.toList());
 
-            line = reader.readLine();
-            result.append(line);
-            reader.close();
-            System.out.println("Pobieranie danych z WeatherFetcherService.");
-            System.out.println(result);
-            JSONObject jsonObject = new JSONObject(result.toString());
-            if (jsonObject != null) {
-                System.out.println(jsonObject);
-                weatherData.loadCurrentData(jsonObject);
-            }
-            } catch (MalformedURLException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        List<String> allFutures =
+                CompletableFuture.allOf(futures.toArray(new CompletableFuture<?>[0]))
+                .thenApply(v -> futures.stream()
+                        .map(CompletableFuture::join)
+                        .collect(Collectors.toList())
+                ).get();
+
+           CitySearchResult result = validateFetchedData(allFutures);
+        return result;
+
+        } catch (RuntimeException e){
+            e.printStackTrace();
+            System.out.println("Cause=" + e.getCause());
+            return CitySearchResult.FAILED_BY_UNEXPECTED_ERROR;
         }
     }
-    
-    public void fetchWeatherForecast(String location) throws IOException {
-        StringBuilder result = new StringBuilder();
-        try {
-            URL url = new URL("http://api.openweathermap.org/data/2.5/forecast?q="+location+"&appid" +
-                    "=c8be7af25cecaa14bc28e7439a4a4130&units=metric&lang=pl");
-            System.out.println(url);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            InputStream inputStream = conn.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line = "";
+    /**
+     * @return API call to fetch forecast weather for desired location
+     */
+    private CitySearchResult validateFetchedData(List<String> jsonStrings) throws JSONException {
+        JSONObject jo1 = new JSONObject(jsonStrings.get(0));
 
-            while((line = reader.readLine()) != null){
-                result.append(line);
+        try{
+            int result = toInt(jo1.get("cod"));
+            if (result != 200) {
+                System.out.println("Nie ma takiej miejscowości. Error 404.");
+                return CitySearchResult.FAILED_BY_CITYNAME;
+            } else {
+                weatherData.loadCurrentData(jo1);
+                weatherData.loadForecast((new JSONObject(jsonStrings.get(1))).getJSONArray("list"));
+                return CitySearchResult.SUCCESS;
             }
-            reader.close();
-            System.out.println("Pobieranie danych z WeatherFetcherService.");
-            System.out.println(result);
-            JSONObject jsonObject = new JSONObject(result.toString());
-            JSONArray forecastArray = jsonObject.getJSONArray("list");
-            System.out.println(forecastArray);
-            if (forecastArray != null) {
-                try {
-                    weatherData.loadForecast(forecastArray);
-                } catch (IOException exc) {
-                    // handle exception...
-                }
-            }
-        } catch (MalformedURLException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch(JSONException | IOException e) {
+            e.printStackTrace();
+            return CitySearchResult.FAILED_BY_UNEXPECTED_ERROR;
         }
+    }
 
+    /** Openweathermap returns result code as string or as integer depending on code
+     * Function checks if code is an instance of an int or a string and returns always
+     * an int.
+     * @return int - status code
+     */
+    private int toInt(Object object){
+        if (object instanceof Integer)
+            return (Integer) object;
+        else
+            return Integer.parseInt(object.toString());
+    }
+
+    /** @return API call to fetch current weather for desired location */
+    private String getCurrentWeatherLink(String location){
+        return "http://api.openweathermap.org/data/2.5/weather?q="+location+"&appid" +
+                "="+apiKey+"&units=metric&lang=pl";
+    }
+
+    /** @return API call to fetch forecast weather for desired location */
+    private String getForecastWeatherLink(String location){
+        return "http://api.openweathermap.org/data/2.5/forecast?q="+location+"&appid" +
+                "="+apiKey+"&units=metric&lang=pl";
     }
 }
