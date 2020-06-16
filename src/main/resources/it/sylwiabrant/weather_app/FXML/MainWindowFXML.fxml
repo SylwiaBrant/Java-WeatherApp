@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="596.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Label fx:id="locationLabel1" contentDisplay="CENTER" layoutX="113.0" layoutY="7.0" prefHeight="27.0" prefWidth="234.0" text="Location" textAlignment="CENTER" wrapText="true">
+        <Label fx:id="locationLabel1" contentDisplay="CENTER" layoutX="136.0" layoutY="7.0" prefHeight="27.0" prefWidth="234.0" text="Location" textAlignment="CENTER" wrapText="true">
             <font>
                 <Font size="16.0" />
             </font>
@@ -60,83 +60,27 @@
                 <Insets left="10.0" right="10.0" />
             </padding>
         </GridPane>
-        <Label fx:id="locationLabel2" contentDisplay="CENTER" layoutX="108.0" layoutY="306.0" prefHeight="27.0" prefWidth="244.0" text="Location" textAlignment="CENTER" wrapText="true">
-            <font>
-                <Font size="16.0" />
-            </font>
-        </Label>
-        <Button fx:id="change1LocBtn" layoutX="7.0" layoutY="7.0" mnemonicParsing="false" onAction="#change1LocAction" prefHeight="27.0" prefWidth="55.0" text="Zmień" />
-        <ImageView fitHeight="20.0" fitWidth="18.0" layoutX="73.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+        <Button fx:id="change1stCityBtn" layoutX="7.0" layoutY="7.0" mnemonicParsing="false" onAction="#change1stCityAction" prefHeight="27.0" prefWidth="76.0" text="Zmień" />
+        <ImageView fitHeight="20.0" fitWidth="18.0" layoutX="96.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../Icons/loc.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="20.0" fitWidth="13.0" layoutX="73.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="20.0" fitWidth="13.0" layoutX="96.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../Icons/loc.png" />
             </image>
         </ImageView>
-        <Button fx:id="change2LocBtn" layoutX="7.0" layoutY="306.0" mnemonicParsing="false" onAction="#change2LocAction" prefHeight="27.0" prefWidth="55.0" text="Zmień" />
-        <GridPane fx:id="currentConds2" hgap="5.0" layoutX="7.0" layoutY="344.0" prefHeight="236.0" prefWidth="260.0" vgap="2.0">
-            <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="79.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="117.0" minWidth="10.0" prefWidth="83.0" />
-            </columnConstraints>
-            <rowConstraints>
-            <RowConstraints maxHeight="67.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="20.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            </rowConstraints>
-            <opaqueInsets>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-            </opaqueInsets>
-            <padding>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-            </padding>
-         <children>
-            <ImageView fitHeight="22.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
-               <image>
-                  <Image url="@../Icons/downfall.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
-               <image>
-                  <Image url="@../Icons/pressure.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4">
-               <image>
-                  <Image url="@../Icons/wind.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
-               <image>
-                  <Image url="@../Icons/humidity.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5">
-               <image>
-                  <Image url="@../Icons/cloudiness.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="5">
-               <image>
-                  <Image url="@../Icons/vi.png" />
-               </image>
-            </ImageView>
-         </children>
-        </GridPane>
-      <GridPane fx:id="currentConds1" hgap="5.0" layoutX="7.0" layoutY="62.0" prefHeight="236.0" prefWidth="260.0" vgap="2.0">
+        <Button fx:id="change2LocBtn" layoutX="7.0" layoutY="306.0" mnemonicParsing="false" onAction="#change2ndCityAction" prefHeight="27.0" prefWidth="76.0" text="Zmień" />
+      <GridPane fx:id="currentConds1" hgap="5.0" layoutX="14.0" layoutY="48.0" prefHeight="236.0" prefWidth="280.0" vgap="2.0">
          <columnConstraints>
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="81.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="75.0" minWidth="60.0" prefWidth="60.0" />
+            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="117.0" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="75.0" minWidth="60.0" prefWidth="60.0" />
+            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0"
+                               prefWidth="25.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints maxHeight="66.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
@@ -152,38 +96,35 @@
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
-         <children>
-            <ImageView fitHeight="22.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
-               <image>
-                  <Image url="@../Icons/downfall.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4">
-               <image>
-                  <Image url="@../Icons/wind.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5">
-               <image>
-                  <Image url="@../Icons/cloudiness.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
-               <image>
-                  <Image url="@../Icons/pressure.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
-               <image>
-                  <Image url="@../Icons/humidity.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="5">
-               <image>
-                  <Image url="@../Icons/vi.png" />
-               </image>
-            </ImageView>
-         </children>
       </GridPane>
+      <GridPane fx:id="currentConds2" hgap="5.0" layoutX="14.0" layoutY="344.0" prefHeight="236.0" prefWidth="280.0" vgap="2.0">
+         <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="75.0" minWidth="60.0" prefWidth="60.0" />
+            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="75.0" minWidth="60.0" prefWidth="60.0" />
+            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="66.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <opaqueInsets>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </opaqueInsets>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </GridPane>
+      <Label fx:id="locationLabel2" contentDisplay="CENTER" layoutX="126.0" layoutY="306.0" prefHeight="27.0" prefWidth="234.0" text="Location" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

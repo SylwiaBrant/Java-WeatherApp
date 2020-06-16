@@ -1,5 +1,6 @@
 package it.sylwiabrant.weather_app.model;
 
+import it.sylwiabrant.weather_app.controller.WeatherViewController;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.IOException;
@@ -15,21 +16,23 @@ import java.util.ArrayList;
 public class WeatherDataCollection {
     private ArrayList<CurrentWeather> currentWeatherList;
     private ArrayList<ArrayList<ForecastWeather>> forecastList;
+    private WeatherViewController observer = null;
 
     public WeatherDataCollection() {
-        this.currentWeatherList = new ArrayList<CurrentWeather>();
-        this.forecastList = new ArrayList<ArrayList<ForecastWeather>>();
+        this.currentWeatherList = new ArrayList<>();
+        this.forecastList = new ArrayList<>();
+
         System.out.println("Tworzenie WeatherDataCollection.");
     }
 
-    /** Load current weather data to CurrentWeather object and push it into
-     * currentWeatherList. API response provides 40 data sets of every 3h
-     * weather forecast. Extract only data sets for next 4 days: 8 measurement
-     * sets per day
-     * @param JSONArray jsonArray - array of 40 data sets downloaded from API
+    /** Load current weather data into CurrentWeather object and push it into
+     * currentWeatherList. Checking if data fetched from API contains all needed fields,
+     * set them as the properties of the object
+     * @param jsonObject - current weather data set downloaded from API
+     * @param index
      */
-    public void loadCurrentData(JSONObject jsonObject) {
-      //  System.out.println("ładowanie danych do WeatherDataCollection.");
+    public void loadCurrentData(JSONObject jsonObject, int index) {
+        System.out.println("ładowanie danych do WeatherDataCollection.");
         double snow = 0, rain = 0, temp = 0, windChill = 0; int clouds = 0; String windDirection = "", visibility="";
 
         CurrentWeather cond = new CurrentWeather();
@@ -76,9 +79,14 @@ public class WeatherDataCollection {
         cond.setClouds(String.valueOf(clouds));
         cond.setIcon(getConditionsIcon(cond.getMain(), clouds));
         System.out.println(cond);
-        currentWeatherList.add(cond);
+        currentWeatherList.add(index, cond);
     }
 
+    /** Convert double value to string with 1 or 2 decimal places
+     * @param doubleValue - conditions double value fetched from API
+     * @param decimalPlaces - number of decimalPlaces wanted in string
+     * @return String - double converted to String
+     */
     private String roundDoubleToString(double doubleValue, int decimalPlaces) {
         if (decimalPlaces == 1) {
             DecimalFormat df = new DecimalFormat("#.#");
@@ -94,9 +102,10 @@ public class WeatherDataCollection {
     * ForecastList. API response provides 40 data sets of every 3h weather forecast.
     * Extract only data sets for next 4 days: 8 measurement sets per day
     * @param jsonArray - array of 40 data sets downloaded from API
-    * @return void
+    * @param index
+     * @return void
     */
-    public void loadForecast(JSONArray jsonArray) throws IOException {
+    public void loadForecast(JSONArray jsonArray, int index) throws IOException {
         int startingSet = ((24-LocalTime.now().getHour())/3);
         int endingSet = startingSet+(4*8);
 
@@ -111,7 +120,7 @@ public class WeatherDataCollection {
             ForecastWeather cond = extractDailyConditions(dayForecast);
             forecastsPerCity.add(cond);
         }
-        forecastList.add(forecastsPerCity);
+        forecastList.add(index, forecastsPerCity);
     }
 
     /** From 8 measurements every 3 hours in a day, get highest and lowest temperature,
@@ -184,22 +193,35 @@ public class WeatherDataCollection {
     public ArrayList<ArrayList<ForecastWeather>> getForecasts() {
         return forecastList;
     }
+
+    /** @return CurrentWeather currentWeatherList */
+    public CurrentWeather getSingleCityWeather(int index) {
+        return currentWeatherList.get(index);
+    }
+
+    /** @return ArrayList<CurrentWeather> forecastList */
+    public ArrayList<ForecastWeather> getSingleCityForecasts(int index) {
+        return forecastList.get(index);
+    }
+
     /**
      * Takes degrees at which wind blows and converts them to intercardinal directions
      * @param deg - degrees at which wind blows
      * @return intercardinal direction string
      */
     private String windDirToLetters(int deg) {
-        if (deg >= 0.0 && deg < 22.5) return "N";
-        if (deg >= 337.5 && deg < 360) return "N";
-        if (deg >= 22.5 && deg < 67.5) return "NE";
-        if (deg >= 67.5 && deg < 112.5) return "E";
-        if (deg >= 112.5 && deg < 157.5) return "SE";
-        if (deg >= 157.5 && deg < 202.5) return "S";
-        if (deg >= 202.5 && deg < 247.5) return "SW";
-        if (deg >= 247.5 && deg < 292.5) return "W";
-        if (deg >= 292.5 && deg < 337.5) return "NW";
-        return "";
+        if (deg >= 112.5 && deg < 247.5) {
+            if (deg >= 112.5 && deg < 157.5) return "SE";
+            else if (deg >= 202.5 && deg < 247.5) return "SW";
+            else return "S";
+        }
+        else if (deg >= 247.5 && deg < 292.5) return "W";
+        else if (deg >= 67.5 && deg < 112.5) return "E";
+        else {
+            if(deg >= 292.5 && deg < 337.5) return "NW";
+            if(deg >= 22.5 && deg < 67.5) return "NE";
+            else return "N";
+        }
     }
 
     /**
@@ -251,5 +273,14 @@ public class WeatherDataCollection {
             currentWeatherList.clear();
         if(!forecastList.isEmpty())
             forecastList.clear();
+    }
+
+    public void notifyAboutDataUpdate(int index){
+        observer.updateCityView(index);
+    }
+
+    public void registerObserver(WeatherViewController controller){
+        if (observer == null)
+            this.observer = controller;
     }
 }

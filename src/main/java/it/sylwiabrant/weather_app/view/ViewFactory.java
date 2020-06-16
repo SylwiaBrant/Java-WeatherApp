@@ -1,6 +1,7 @@
 package it.sylwiabrant.weather_app.view;
 
 import it.sylwiabrant.weather_app.controller.BaseController;
+import it.sylwiabrant.weather_app.controller.ChooseSingleCityController;
 import it.sylwiabrant.weather_app.controller.ChooseTwoCitiesController;
 import it.sylwiabrant.weather_app.controller.WeatherViewController;
 import it.sylwiabrant.weather_app.model.WeatherDataCollection;
@@ -29,9 +30,22 @@ public class ViewFactory {
         weatherViewInitialized = true;
     }
 
-    public void showChoiceWindow(){
+    public void showBothCitiesChoiceWindow(){
         BaseController controller = new ChooseTwoCitiesController(weatherData, this, "/it/sylwiabrant/weather_app/FXML" +
                 "/ChooseCitiesFXML.fxml");
+        initializeStage(controller);
+    }
+
+    public void show1stCityChoiceWindow(){
+        BaseController controller = new ChooseSingleCityController(weatherData, this, "/it/sylwiabrant/weather_app" +
+                "/FXML" +
+                "/ChooseCityFXML.fxml", 0);
+        initializeStage(controller);
+    }
+
+    public void show2ndCityChoiceWindow(){
+        BaseController controller = new ChooseSingleCityController(weatherData, this, "/it/sylwiabrant/weather_app/FXML" +
+                "/ChooseCityFXML.fxml", 1);
         initializeStage(controller);
     }
 
@@ -60,12 +74,4 @@ public class ViewFactory {
     public void closeStage(Stage stage) {
         stage.close();
     }
-/*
-    public void updateView(){
-        updateIcons();
-    }
-
-    private void updateIcons(){
-
-    }*/
 }
