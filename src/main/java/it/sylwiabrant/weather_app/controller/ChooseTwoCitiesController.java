@@ -33,9 +33,8 @@ public class ChooseTwoCitiesController extends BaseController{
     void fetchDataAction() {
         String city1 = cityField1.getText();
         String city2 = cityField2.getText();
-        WeatherFetcherService weatherFetcherService = new WeatherFetcherService(weatherData);
-        CitySearchResult citySearchResult1 = weatherFetcherService.fetchCityWeatherData(city1, 0);
-        CitySearchResult citySearchResult2 = weatherFetcherService.fetchCityWeatherData(city2, 1);
+        CitySearchResult citySearchResult1 = weatherData.fetchCityWeatherData(city1, 0);
+        CitySearchResult citySearchResult2 = weatherData.fetchCityWeatherData(city2, 1);
         if (citySearchResult1 == CitySearchResult.SUCCESS && citySearchResult2 == CitySearchResult.SUCCESS) {
             System.out.println("Pomyślnie pobrano dane pogodowe.");
             if (!viewFactory.isWeatherViewInitialized()) {

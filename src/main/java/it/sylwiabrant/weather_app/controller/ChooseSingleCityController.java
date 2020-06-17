@@ -24,11 +24,9 @@ public class ChooseSingleCityController extends BaseController {
     @FXML
     void searchCityAction() {
         String city = cityField.getText();
-        WeatherFetcherService weatherFetcherService = new WeatherFetcherService(weatherData);
-        CitySearchResult citySearchResult = weatherFetcherService.fetchCityWeatherData(city, cityIndex);
+        CitySearchResult citySearchResult = weatherData.changeCityWeatherData(city, cityIndex);
         if (citySearchResult == CitySearchResult.SUCCESS) {
             System.out.println("Pomyślnie pobrano dane pogodowe.");
-                weatherData.notifyAboutDataUpdate(cityIndex);
                 viewFactory.closeStage((Stage) errorLabel.getScene().getWindow());
             return;
         } else if (citySearchResult == CitySearchResult.FAILED_BY_CITYNAME){
