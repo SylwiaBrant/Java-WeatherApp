@@ -22,11 +22,8 @@ public class WeatherFetcherService {
     private WeatherDataCollection weatherData;
     private static HttpClient client;
     private final String apiKey = "c8be7af25cecaa14bc28e7439a4a4130";
-    private FromJsonConverter converter;
 
-    public WeatherFetcherService(WeatherDataCollection weatherData) {
-        this.weatherData = weatherData;
-        this.converter = new FromJsonConverter();
+    public WeatherFetcherService() {
     }
 
     public CitySearchResult fetchCityWeatherData(String city, int index) {
@@ -56,8 +53,8 @@ public class WeatherFetcherService {
             JSONArray forecasts = new JSONObject(allFutures.get(1)).getJSONArray("list");
             CitySearchResult result = validateFetchedData(currentWeather);
             if(result == CitySearchResult.SUCCESS){
-                weatherData.updateCityData(converter.toCurrentWeatherObject(currentWeather),
-                       converter.toForecastsArray(forecasts), index);
+                weatherData.updateCityData(FromJsonConverter.toCurrentWeatherObject(currentWeather),
+                       FromJsonConverter.toForecastsArray(forecasts), index);
             }
             return result;
         } catch (RuntimeException e){
@@ -141,5 +138,9 @@ public class WeatherFetcherService {
     private String getForecastWeatherLink(String location){
         return "http://api.openweathermap.org/data/2.5/forecast?q="+location+"&appid" +
                 "="+apiKey+"&units=metric&lang=pl";
+    }
+
+    public void setDataCollection(WeatherDataCollection weatherDataCollection) {
+        this.weatherData = weatherDataCollection;
     }
 }

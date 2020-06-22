@@ -12,21 +12,20 @@ public class WeatherDataCollection {
     private WeatherViewController observer = null;
     private WeatherFetcherService weatherFetcherService;
 
-    public WeatherDataCollection() {
+    public WeatherDataCollection(WeatherFetcherService weatherFetcherService) {
         this.currentWeatherList = new HashMap<>();
         this.forecastList = new HashMap<>();
-        this.weatherFetcherService = new WeatherFetcherService(this);
+        this.weatherFetcherService = weatherFetcherService;
+        weatherFetcherService.setDataCollection(this);
         System.out.println("Tworzenie WeatherDataCollection.");
     }
 
     public CitySearchResult fetchCityWeatherData(String city, int index){
-        CitySearchResult citySearchResult = weatherFetcherService.fetchCityWeatherData(city, index);
-        return citySearchResult;
+        return weatherFetcherService.fetchCityWeatherData(city, index);
     }
 
     public CitySearchResult changeCityWeatherData(String city, int index){
-        CitySearchResult citySearchResult = weatherFetcherService.changeCityWeatherData(city, index);
-        return citySearchResult;
+        return weatherFetcherService.changeCityWeatherData(city, index);
     }
 
     public void loadCityData(CurrentWeather currentWeather, ArrayList<ForecastWeather> forecasts, int index){
