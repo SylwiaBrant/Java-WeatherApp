@@ -115,8 +115,8 @@ public class FromJsonConverter {
                 imgPath = "clouds.png";
         }
         System.out.println(imgPath);
-        System.out.println(String.valueOf(FromJsonConverter.class.getResource("/it/sylwiabrant/weather_app" +
-                "/Icons/" + imgPath)));
+        System.out.println(FromJsonConverter.class.getResource("/it/sylwiabrant/weather_app" +
+                "/Icons/" + imgPath));
         return String.valueOf(FromJsonConverter.class.getResource("/it/sylwiabrant/weather_app" +
                 "/Icons/" + imgPath));
     }
