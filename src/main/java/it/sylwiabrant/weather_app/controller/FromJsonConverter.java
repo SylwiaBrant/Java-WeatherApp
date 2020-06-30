@@ -23,7 +23,7 @@ public class FromJsonConverter {
      * set them as the properties of the object
      * @param jsonObject - current weather data set downloaded from API
      */
-    public static CurrentWeather toCurrentWeatherObject(JSONObject jsonObject) {
+    public CurrentWeather toCurrentWeatherObject(JSONObject jsonObject) {
         double snow = 0, rain = 0, temp, windChill;
         int clouds;
         String windDirection = "", visibility = "";
@@ -84,7 +84,7 @@ public class FromJsonConverter {
      * @param clouds     - cloudiness in %
      * @return icon path
      */
-    private static String getConditionsIcon(String conditions, int clouds) {
+    private String getConditionsIcon(String conditions, int clouds) {
         String imgPath;
         switch (conditions) {
             case "Clear":
@@ -127,7 +127,7 @@ public class FromJsonConverter {
      * @param deg - degrees at which wind blows
      * @return intercardinal direction string
      */
-    private static String windDirToLetters(int deg) {
+    private String windDirToLetters(int deg) {
         if (deg >= 112.5 && deg < 247.5) {
             if (deg >= 112.5 && deg < 157.5) return "SE";
             else if (deg >= 157.5 && deg < 202.5) return "S";
@@ -148,7 +148,7 @@ public class FromJsonConverter {
      * @param decimalPlaces - number of decimalPlaces wanted in string
      * @return String - double converted to String
      */
-    private static String roundDoubleToString(double doubleValue, int decimalPlaces) {
+    private String roundDoubleToString(double doubleValue, int decimalPlaces) {
         if (decimalPlaces == 1) {
             DecimalFormat df = new DecimalFormat("#.#");
             return df.format(doubleValue);
@@ -164,7 +164,7 @@ public class FromJsonConverter {
      * Extract only data sets for next 4 days: 8 measurement sets per day
      * @param jsonArray - array of 40 data sets downloaded from API
      */
-    public static ArrayList<ForecastWeather> toForecastsArray(JSONArray jsonArray){
+    public ArrayList<ForecastWeather> toForecastsArray(JSONArray jsonArray){
         int startingSet = ((24 - LocalTime.now().getHour()) / 3);
         int endingSet = startingSet + (4 * 8);
 
@@ -189,7 +189,7 @@ public class FromJsonConverter {
      * @param day - array of 8 data sets for 1 whole day
      * @return ForecastWeather - object containing forecast weather for 1 whole day
      */
-    private static ForecastWeather extractDailyConditions(ArrayList<JSONObject> day) {
+    private ForecastWeather extractDailyConditions(ArrayList<JSONObject> day) {
         double tempTemp, minTemp = 100, maxTemp = -100, rain = 0.00, snow = 0.00; int clouds = 0; long timestamp;
         String main = "", description = "", pressure = "", windSpeed = "", windDirection = "", date = "",
                 icon = "";

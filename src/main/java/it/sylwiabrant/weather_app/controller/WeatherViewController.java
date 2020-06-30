@@ -46,7 +46,7 @@ public class WeatherViewController extends BaseController implements Initializab
      */
     @FXML
     void change1stCityAction() {
-        viewFactory.show1stCityChoiceWindow();
+        viewFactory.showSingleCityChoiceWindow(0);
     }
     /**
      * On button click opens single city choice window, invokes fetching info about current weather
@@ -54,7 +54,7 @@ public class WeatherViewController extends BaseController implements Initializab
      */
     @FXML
     void change2ndCityAction() {
-        viewFactory.show2ndCityChoiceWindow();
+        viewFactory.showSingleCityChoiceWindow(1);
     }
 
     public WeatherViewController(WeatherDataCollection weatherData, ViewFactory viewFactory, String fxmlName) {
@@ -144,7 +144,6 @@ public class WeatherViewController extends BaseController implements Initializab
     /**
      * Sets icons which replace descriptions for weather conditions and units in current weather grid
      * @param gridPane - gridPane in which the forecast conditions will be set
-     * @return void
      */
     private void setDefaultGridElems(GridPane gridPane) {
         gridPane.add(new ImageView(getDefaultGridIcon("downfall.png")), 0, 3);
@@ -181,7 +180,6 @@ public class WeatherViewController extends BaseController implements Initializab
      * Sets weather forecast in view for single city. Which one depends on sent gridPane
      * @param forecast - 4 day weather forecast objects array
      * @param gridPane - gridPane in which the forecast conditions will be set
-     * @return void
      */
     public void setForecastPerCity(ArrayList<ForecastWeather> forecast, GridPane gridPane) {
         int i = 0;
@@ -215,7 +213,6 @@ public class WeatherViewController extends BaseController implements Initializab
     /**
      * Sets weather forecast in view for single city. Which one depends on sent gridPane
      * @param index - gridPane in which the forecast conditions will be set
-     * @return void
      */
     public void updateCityView(int index){
         Label cityLabel; GridPane currentWeatherPane; GridPane forecastPane;

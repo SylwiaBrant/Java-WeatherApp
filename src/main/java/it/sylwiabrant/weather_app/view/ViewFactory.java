@@ -1,9 +1,6 @@
 package it.sylwiabrant.weather_app.view;
 
-import it.sylwiabrant.weather_app.controller.BaseController;
-import it.sylwiabrant.weather_app.controller.ChooseSingleCityController;
-import it.sylwiabrant.weather_app.controller.ChooseTwoCitiesController;
-import it.sylwiabrant.weather_app.controller.WeatherViewController;
+import it.sylwiabrant.weather_app.controller.*;
 import it.sylwiabrant.weather_app.model.WeatherDataCollection;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,29 +20,29 @@ public class ViewFactory {
         this.weatherData = weatherData;
     }
 
-    public void showWeatherView() throws IOException {
+    public void showWeatherView() {
         BaseController controller = new WeatherViewController(weatherData,this,"/it/sylwiabrant" +
                 "/weather_app/FXML/MainWindowFXML.fxml");
         initializeStage(controller);
         weatherViewInitialized = true;
     }
 
-    public void showBothCitiesChoiceWindow(){
+    public void showBothCitiesChoiceWindow() {
         BaseController controller = new ChooseTwoCitiesController(weatherData, this, "/it/sylwiabrant/weather_app/FXML" +
                 "/ChooseCitiesFXML.fxml");
         initializeStage(controller);
     }
 
-    public void show1stCityChoiceWindow(){
+    public void showSingleCityChoiceWindow(int index) {
         BaseController controller = new ChooseSingleCityController(weatherData, this, "/it/sylwiabrant/weather_app" +
                 "/FXML" +
-                "/ChooseCityFXML.fxml", 0);
+                "/ChooseCityFXML.fxml", index);
         initializeStage(controller);
     }
 
-    public void show2ndCityChoiceWindow(){
+    public void show2ndCityChoiceWindow(int index){
         BaseController controller = new ChooseSingleCityController(weatherData, this, "/it/sylwiabrant/weather_app/FXML" +
-                "/ChooseCityFXML.fxml", 1);
+                "/ChooseCityFXML.fxml", index);
         initializeStage(controller);
     }
 
