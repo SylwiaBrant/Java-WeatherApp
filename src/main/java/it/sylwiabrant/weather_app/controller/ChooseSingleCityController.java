@@ -13,7 +13,7 @@ import javafx.stage.Stage;
  */
 public class ChooseSingleCityController extends BaseController {
 
-    private final int cityIndex;
+    private final int index;
 
     @FXML
     private TextField cityField;
@@ -23,8 +23,8 @@ public class ChooseSingleCityController extends BaseController {
 
     @FXML
     void searchCityAction() {
-        String city = cityField.getText();
-        CitySearchResult citySearchResult = weatherData.changeCityWeatherData(city, cityIndex);
+        String newCityName = cityField.getText();
+        CitySearchResult citySearchResult = weatherData.changeCityWeatherData(newCityName, index);
         if (citySearchResult == CitySearchResult.SUCCESS) {
             System.out.println("Pomyślnie pobrano dane pogodowe.");
                 viewFactory.closeStage((Stage) errorLabel.getScene().getWindow());
@@ -37,8 +37,8 @@ public class ChooseSingleCityController extends BaseController {
     }
 
     public ChooseSingleCityController(WeatherDataCollection weatherData, ViewFactory viewFactory, String fxmlName,
-                                      int index) {
+                                      int index){
         super(weatherData, viewFactory, fxmlName);
-        this.cityIndex = index;
+        this.index = index;
     }
 }
