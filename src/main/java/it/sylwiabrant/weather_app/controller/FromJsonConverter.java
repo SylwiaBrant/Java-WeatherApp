@@ -92,7 +92,7 @@ public class FromJsonConverter {
                 break;
             case "Clouds":
                 if (clouds <= 25)
-                    imgPath = "sunclouds.png";
+                    imgPath = "suncloud.png";
                 else
                     imgPath = "clouds.png";
                 break;

@@ -17,16 +17,20 @@ public class WeatherFetchingCoordinator {
     private OWMWebServiceClient client;
     private FromJsonConverter converter;
 
-    public WeatherFetchingCoordinator(OWMWebServiceClient client,
-                                      FromJsonConverter converter) {
+    public WeatherFetchingCoordinator(OWMWebServiceClient client, FromJsonConverter converter) {
         this.client = client;
         this.converter = converter;
     }
 
+    /**
+     * Checks if the overall process of connecting and obtaining response from OWM API
+     * was successful. This function is used at the start of the program to fetch data
+     * for the first time. Catches exceptions and converts them into appropriate CitySearchResult.
+     * @return CitySearchResult
+     */
     public CitySearchResult fetchCityWeatherData(String city, int index) {
         try {
             List<String> allFutures = client.queryAPI(city);
-            System.out.println(allFutures);
             JSONObject currentWeather = new JSONObject(allFutures.get(0));
             JSONArray forecasts = new JSONObject(allFutures.get(1)).getJSONArray("list");
             CitySearchResult result = validateFetchedData(currentWeather);
@@ -42,10 +46,14 @@ public class WeatherFetchingCoordinator {
         }
     }
 
+    /**
+     * Checks if the overall process of connecting and obtaining response from OWM API
+     * was successful. This function is used when changing one the already obtained locations.
+     * @return CitySearchResult
+     */
     public CitySearchResult refetchCityWeatherData(String city, int index) {
         try {
             List<String> allFutures = client.queryAPI(city);
-            System.out.println(allFutures);
             JSONObject currentWeather = new JSONObject(allFutures.get(0));
             JSONArray forecasts = new JSONObject(allFutures.get(1)).getJSONArray("list");
             CitySearchResult result = validateFetchedData(currentWeather);
@@ -61,7 +69,9 @@ public class WeatherFetchingCoordinator {
         }
     }
      /**
-     * @return API call to fetch forecast weather for desired location
+     * Checks if the status code in JSON from OWM API was successful 200 or other which
+     *  indicates something's wrong with location string provided by the user
+     * @return CitySearchResult
      */
     private CitySearchResult validateFetchedData(JSONObject currentWeather) {
         System.out.println("Validowanie sfetchowanych danych i przesyłanie do WeatherDataCollection.");
@@ -90,6 +100,10 @@ public class WeatherFetchingCoordinator {
         else
             return Integer.parseInt(object.toString());
     }
+
+    /**
+     * Creates a two-way connection between WeatherDataCollection and WeatherFetchingCoordinator classes
+     */
     public void setDataCollection(WeatherDataCollection weatherDataCollection) {
         this.weatherData = weatherDataCollection;
     }
