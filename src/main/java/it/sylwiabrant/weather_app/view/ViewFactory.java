@@ -40,12 +40,6 @@ public class ViewFactory {
         initializeStage(controller);
     }
 
-    public void show2ndCityChoiceWindow(int index){
-        BaseController controller = new ChooseSingleCityController(weatherData, this, "/it/sylwiabrant/weather_app/FXML" +
-                "/ChooseCityFXML.fxml", index);
-        initializeStage(controller);
-    }
-
     private void initializeStage(BaseController controller) {
         System.out.println("Inicjalizacja view w ViewFactory.");
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(controller.getFxmlName()));

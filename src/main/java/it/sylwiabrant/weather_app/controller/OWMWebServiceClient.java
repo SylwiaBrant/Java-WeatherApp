@@ -14,12 +14,14 @@ import java.util.stream.Collectors;
  */
 public class OWMWebServiceClient {
     private static HttpClient client;
-    private final String apiKey = "c8be7af25cecaa14bc28e7439a4a4130";
+    private static final String apiKey = "c8be7af25cecaa14bc28e7439a4a4130";
 
-    /** Openweathermap returns result code as string or as integer depending on code
-     * Function checks if code is an instance of an int or a string and returns always
-     * an int.
-     * @return int - status code
+    /**
+     * Makes two async calls to fetch current weather and forecasts data for 1 city
+     * and collects them into a list of strings. Throws exceptions connected to async
+     * http calls and rethrows them as RuntimeExceptions.
+     * @param location - name of the city obtained from user input
+     * @return list of json strings: current weather and second for forecasts for 1 city
      */
     public List<String> queryAPI(String location) {
         client = HttpClient.newHttpClient();
