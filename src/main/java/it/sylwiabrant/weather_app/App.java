@@ -17,9 +17,12 @@ public class App extends Application {
     public void start(Stage stage) {
         FromJsonConverter converter = new FromJsonConverter();
         OWMWebServiceClient client = new OWMWebServiceClient();
-        WeatherFetchingCoordinator coordinator = new WeatherFetchingCoordinator(client, converter);
-        WeatherDataCollection weatherDataCollection = new WeatherDataCollection(coordinator);
-        ViewFactory viewFactory = new ViewFactory(weatherDataCollection);
+        WeatherDataCollection weatherDataCollection = new WeatherDataCollection();
+        WeatherFetchingCoordinator coordinator = new WeatherFetchingCoordinator(
+                weatherDataCollection,
+                client,
+                converter);
+        ViewFactory viewFactory = new ViewFactory(coordinator, weatherDataCollection);
         viewFactory.showBothCitiesChoiceWindow();
     }
 

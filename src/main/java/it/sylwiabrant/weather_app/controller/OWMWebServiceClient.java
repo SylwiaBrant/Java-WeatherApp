@@ -13,18 +13,22 @@ import java.util.stream.Collectors;
  * Created by Sylwia Brant
  */
 public class OWMWebServiceClient {
-    private static HttpClient client;
-    private static final String apiKey = "c8be7af25cecaa14bc28e7439a4a4130";
+    private HttpClient client;
+    private static final String API_KEY = "c8be7af25cecaa14bc28e7439a4a4130";
+
+    public OWMWebServiceClient() {
+        this.client = HttpClient.newHttpClient();
+    }
 
     /**
      * Makes two async calls to fetch current weather and forecasts data for 1 city
      * and collects them into a list of strings. Throws exceptions connected to async
      * http calls and rethrows them as RuntimeExceptions.
+     *
      * @param location - name of the city obtained from user input
      * @return list of json strings: current weather and second for forecasts for 1 city
      */
     public List<String> queryAPI(String location) {
-        client = HttpClient.newHttpClient();
         List<URI> dataURIs =
                 List.of(
                         URI.create(getCurrentWeatherLink(location)),
@@ -37,7 +41,7 @@ public class OWMWebServiceClient {
                                     HttpResponse.BodyHandlers.ofString())
                             .thenApply(HttpResponse::body)
                             .exceptionally(e -> {
-                                throw (RuntimeException) e;
+                                throw new RuntimeException(e);
                             }))
                     .collect(Collectors.toList());
 
@@ -51,15 +55,13 @@ public class OWMWebServiceClient {
         }
     }
 
-    /** @return API call to fetch current weather for desired location */
-    private String getCurrentWeatherLink(String location){
-        return "http://api.openweathermap.org/data/2.5/weather?q="+location+"&appid" +
-                "="+apiKey+"&units=metric&lang=pl";
+    private String getCurrentWeatherLink(String location) {
+        return "http://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid" +
+                "=" + API_KEY + "&units=metric&lang=pl";
     }
 
-    /** @return API call to fetch forecast weather for desired location */
-    private String getForecastWeatherLink(String location){
-        return "http://api.openweathermap.org/data/2.5/forecast?q="+location+"&appid" +
-                "="+apiKey+"&units=metric&lang=pl";
+    private String getForecastWeatherLink(String location) {
+        return "http://api.openweathermap.org/data/2.5/forecast?q=" + location + "&appid" +
+                "=" + API_KEY + "&units=metric&lang=pl";
     }
 }

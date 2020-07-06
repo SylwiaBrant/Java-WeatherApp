@@ -1,47 +1,43 @@
 package it.sylwiabrant.weather_app.model;
 
-import it.sylwiabrant.weather_app.controller.WeatherFetchingCoordinator;
 import it.sylwiabrant.weather_app.controller.WeatherViewController;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-/** Created by Sylwia Brant */
+/**
+ * Created by Sylwia Brant
+ */
 public class WeatherDataCollection {
-    private HashMap<Integer, CurrentWeather> currentWeatherList;
-    private HashMap<Integer, ArrayList<ForecastWeather>> forecastList;
+    private Map<Integer, CurrentWeather> currentWeatherList;
+    private Map<Integer, List<ForecastWeather>> forecastList;
     private WeatherViewController observer = null;
-    private WeatherFetchingCoordinator weatherFetchingCoordinator;
 
-    public WeatherDataCollection(WeatherFetchingCoordinator weatherFetchingCoordinator) {
+    public WeatherDataCollection() {
         this.currentWeatherList = new HashMap<>();
         this.forecastList = new HashMap<>();
-        this.weatherFetchingCoordinator = weatherFetchingCoordinator;
-        weatherFetchingCoordinator.setDataCollection(this);
-        System.out.println("Tworzenie WeatherDataCollection.");
     }
 
-    public CitySearchResult fetchCityWeatherData(String city, int index){
-        return weatherFetchingCoordinator.fetchCityWeatherData(city, index);
-    }
-
-    public CitySearchResult changeCityWeatherData(String city, int index){
-        return weatherFetchingCoordinator.refetchCityWeatherData(city, index);
-    }
-
-    public void loadCityData(CurrentWeather currentWeather, ArrayList<ForecastWeather> forecasts, int index){
+    public void loadCityData(CurrentWeather currentWeather, ArrayList<ForecastWeather> forecasts, int index) {
         addCurrentWeather(currentWeather, index);
         addForecasts(forecasts, index);
     }
 
-    /** @param index - index in the HashMap,corresponding to upper (0) or lower (1) */
+    /**
+     * @param index - index in the HashMap,corresponding to upper (0) or lower (1)
+     */
     public void addCurrentWeather(CurrentWeather currentWeather, int index) {
         System.out.println("ładowanie danych do WeatherDataCollection.");
         currentWeatherList.put(index, currentWeather);
     }
 
-    /** Load forecast weather data into ForecastList.
+    /**
+     * Load forecast weather data into ForecastList.
+     *
      * @param index - index in the HashMap,corresponding to upper (0) or lower (1)
-     * part of the window
+     *              part of the window
      */
     public void addForecasts(ArrayList<ForecastWeather> forecastsPerCity, int index) {
         forecastList.put(index, forecastsPerCity);
@@ -51,7 +47,7 @@ public class WeatherDataCollection {
      * Removes old current weather object and forecastsObject from collections at
      * <index> position and invokes loading new data object to said position
      */
-    public void updateCityData(CurrentWeather currentWeather, ArrayList<ForecastWeather> forecasts, int index){
+    public void updateCityData(CurrentWeather currentWeather, ArrayList<ForecastWeather> forecasts, int index) {
 
         currentWeatherList.remove(index);
         forecastList.remove(index);
@@ -61,19 +57,17 @@ public class WeatherDataCollection {
         notifyAboutDataUpdate(index);
     }
 
-    /** Removes all data from CurrentWeatherList and ForecastList if it's not already empty */
+    /**
+     * Removes all data from CurrentWeatherList and ForecastList if it's not already empty
+     */
     public void removeData() {
-        if(!currentWeatherList.isEmpty())
+        if (!currentWeatherList.isEmpty())
             currentWeatherList.clear();
-        if(!forecastList.isEmpty())
+        if (!forecastList.isEmpty())
             forecastList.clear();
     }
 
-    /**
-     * Removes old current weather object from HashMap at <index> position and invokes
-     * loding new data object to said position
-     */
-    private void notifyAboutDataUpdate(int index){
+    private void notifyAboutDataUpdate(int index) {
         observer.updateCityView(index);
     }
 
@@ -81,28 +75,36 @@ public class WeatherDataCollection {
      * Removes old current weather object from HashMap at <index> position and invokes
      * loding new data object to said position
      */
-    public void registerObserver(WeatherViewController controller){
+    public void registerObserver(WeatherViewController controller) {
         if (observer == null)
             this.observer = controller;
     }
 
-    /** @return ArrayList<CurrentWeather> currentWeatherList */
-    public HashMap<Integer, CurrentWeather> getCurrentWeathers() {
+    /**
+     * @return ArrayList<CurrentWeather> currentWeatherList
+     */
+    public Map<Integer, CurrentWeather> getCurrentWeathers() {
         return currentWeatherList;
     }
 
-    /** @return ArrayList<ArrayList<CurrentWeather>> forecastList */
-    public HashMap<Integer, ArrayList<ForecastWeather>> getForecasts() {
+    /**
+     * @return ArrayList<ArrayList < CurrentWeather>> forecastList
+     */
+    public Map<Integer, List<ForecastWeather>> getForecasts() {
         return forecastList;
     }
 
-    /** @return CurrentWeather currentWeatherList */
+    /**
+     * @return CurrentWeather currentWeatherList
+     */
     public CurrentWeather getSingleCityWeather(int index) {
         return currentWeatherList.get(index);
     }
 
-    /** @return ArrayList<CurrentWeather> forecastList */
-    public ArrayList<ForecastWeather> getSingleCityForecasts(int index) {
+    /**
+     * @return ArrayList<CurrentWeather> forecastList
+     */
+    public List<ForecastWeather> getSingleCityForecasts(int index) {
         return forecastList.get(index);
     }
 }
