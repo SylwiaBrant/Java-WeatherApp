@@ -18,11 +18,14 @@ import java.util.ArrayList;
  */
 public class FromJsonConverter {
 
-    /** Load current weather data into CurrentWeather object and push it into
+    /**
+     * Load current weather data into CurrentWeather object and push it into
      * currentWeatherList. Checking if data fetched from API contains all needed fields,
      * set them as the properties of the object
+     *
      * @param jsonObject - current weather data set downloaded from API
      */
+
     public CurrentWeather toCurrentWeatherObject(JSONObject jsonObject) {
         double snow = 0, rain = 0, temp, windChill;
         int clouds;
@@ -71,7 +74,6 @@ public class FromJsonConverter {
         cond.setVisibility(visibility);
         cond.setClouds(String.valueOf(clouds));
         cond.setIcon(getConditionsIcon(cond.getMain(), clouds));
-        System.out.println(cond);
 
         return cond;
     }
@@ -114,9 +116,7 @@ public class FromJsonConverter {
             default:
                 imgPath = "clouds.png";
         }
-        System.out.println(imgPath);
-        System.out.println(FromJsonConverter.class.getResource("/it/sylwiabrant/weather_app" +
-                "/Icons/" + imgPath));
+
         return String.valueOf(FromJsonConverter.class.getResource("/it/sylwiabrant/weather_app" +
                 "/Icons/" + imgPath));
     }
@@ -162,15 +162,15 @@ public class FromJsonConverter {
      * Load forecast weather data to ForecastWeather object.
      * API response provides 40 data sets of every 3h weather forecast.
      * Extract only data sets for next 4 days: 8 measurement sets per day
+     *
      * @param jsonArray - array of 40 data sets downloaded from API
      */
-    public ArrayList<ForecastWeather> toForecastsArray(JSONArray jsonArray){
+    public ArrayList<ForecastWeather> toForecastsArray(JSONArray jsonArray) {
         int startingSet = ((24 - LocalTime.now().getHour()) / 3);
         int endingSet = startingSet + (4 * 8);
 
         ArrayList<ForecastWeather> forecastsPerCity = new ArrayList<>();
-        while(startingSet !=endingSet)
-        {
+        while (startingSet != endingSet) {
             ArrayList<JSONObject> dayForecast = new ArrayList<>();
             for (int i = 0; i < 8; i++) {
                 JSONObject forecastChunk = (JSONObject) jsonArray.get(startingSet);
@@ -183,18 +183,22 @@ public class FromJsonConverter {
         return forecastsPerCity;
     }
 
-    /** From 8 measurements every 3 hours in a day, get highest and lowest temperature,
+    /**
+     * From 8 measurements every 3 hours in a day, get highest and lowest temperature,
      * cumulative rain and snow, rest of required values: pressure, wind speed and direction,
      * date, icon, conditions description main and detailed for noon and set them on ForecastWeather object.
+     *
      * @param day - array of 8 data sets for 1 whole day
      * @return ForecastWeather - object containing forecast weather for 1 whole day
      */
     private ForecastWeather extractDailyConditions(ArrayList<JSONObject> day) {
-        double tempTemp, minTemp = 100, maxTemp = -100, rain = 0.00, snow = 0.00; int clouds = 0; long timestamp;
+        double tempTemp, minTemp = 100, maxTemp = -100, rain = 0.00, snow = 0.00;
+        int clouds = 0;
+        long timestamp;
         String main = "", description = "", pressure = "", windSpeed = "", windDirection = "", date = "",
                 icon = "";
 
-        for(int i = 0; i < 8; i++) {
+        for (int i = 0; i < 8; i++) {
             JSONObject forecastChunk = day.get(i);
             /*get highest and lowest temp per day*/
             tempTemp = ((Number) forecastChunk.getJSONObject("main").get("temp")).doubleValue();
@@ -212,7 +216,7 @@ public class FromJsonConverter {
             /*get rest of conditions for noon*/
             if (i % 6 == 0) {
                 timestamp = ((Number) forecastChunk.get("dt")).longValue();
-                LocalDate localDate = Instant.ofEpochMilli(timestamp*1000).atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate localDate = Instant.ofEpochMilli(timestamp * 1000).atZone(ZoneId.systemDefault()).toLocalDate();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM");
                 date = localDate.format(formatter);
                 main = forecastChunk.getJSONArray("weather").getJSONObject(0).get("main").toString();
@@ -230,11 +234,11 @@ public class FromJsonConverter {
         forecast.setIcon(icon);
         forecast.setMain(main);
         forecast.setDescription(description);
-        forecast.setMaxTemp(roundDoubleToString(maxTemp,1));
-        forecast.setMinTemp(roundDoubleToString(minTemp,1));
+        forecast.setMaxTemp(roundDoubleToString(maxTemp, 1));
+        forecast.setMinTemp(roundDoubleToString(minTemp, 1));
         forecast.setDate(date);
         forecast.setDescription(description);
-        forecast.setRain(roundDoubleToString(rain,2));
+        forecast.setRain(roundDoubleToString(rain, 2));
         forecast.setSnow(roundDoubleToString(snow, 2));
         forecast.setPressure(pressure);
         forecast.setWindSpeed(windSpeed);

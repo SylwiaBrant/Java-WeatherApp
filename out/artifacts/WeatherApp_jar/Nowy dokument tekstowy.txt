@@ -1,0 +1,1 @@
+"c:\Program Files\Java\jdk-11.0.7\bin\java.exe" --module-path "c:\JavaLibs\javafx-sdk-11.0.2\lib" --add-modules=javafx.controls,javafx.fxml,org.json,java.net.http -jar WeatherApp-1.0-SNAPSHOT.jar

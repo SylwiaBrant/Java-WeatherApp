@@ -5,7 +5,7 @@ package it.sylwiabrant.weather_app.model;
  */
 public enum CitySearchResult {
     SUCCESS,
-    FAILED_BY_CITYNAME,
+    FAILED_BY_CITY_NAME,
     FAILED_BY_NETWORK,
     FAILED_BY_UNEXPECTED_ERROR
 }

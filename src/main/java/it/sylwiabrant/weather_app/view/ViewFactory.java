@@ -14,40 +14,46 @@ import java.io.IOException;
  */
 public class ViewFactory {
     private WeatherDataCollection weatherData;
+    private WeatherFetchingCoordinator fetchingCoordinator;
     private boolean weatherViewInitialized = false;
 
-    public ViewFactory(WeatherDataCollection weatherData) {
+    public ViewFactory(WeatherFetchingCoordinator fetchingCoordinator, WeatherDataCollection weatherData) {
+        this.fetchingCoordinator = fetchingCoordinator;
         this.weatherData = weatherData;
     }
 
     public void showWeatherView() {
-        BaseController controller = new WeatherViewController(weatherData,this,"/it/sylwiabrant" +
+        BaseController controller = new WeatherViewController(weatherData, this, "/it/sylwiabrant" +
                 "/weather_app/FXML/MainWindowFXML.fxml");
         initializeStage(controller);
         weatherViewInitialized = true;
     }
 
     public void showBothCitiesChoiceWindow() {
-        BaseController controller = new ChooseTwoCitiesController(weatherData, this, "/it/sylwiabrant/weather_app/FXML" +
+        BaseController controller = new ChooseTwoCitiesController(fetchingCoordinator,
+                weatherData, this, "/it/sylwiabrant" +
+                "/weather_app/FXML" +
                 "/ChooseCitiesFXML.fxml");
         initializeStage(controller);
     }
 
     public void showSingleCityChoiceWindow(int index) {
-        BaseController controller = new ChooseSingleCityController(weatherData, this, "/it/sylwiabrant/weather_app" +
+        BaseController controller = new ChooseSingleCityController(fetchingCoordinator,
+                weatherData, this, "/it" +
+                "/sylwiabrant" +
+                "/weather_app" +
                 "/FXML" +
                 "/ChooseCityFXML.fxml", index);
         initializeStage(controller);
     }
 
     private void initializeStage(BaseController controller) {
-        System.out.println("Inicjalizacja view w ViewFactory.");
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(controller.getFxmlName()));
         fxmlLoader.setController(controller);
         Parent parent;
         try {
             parent = fxmlLoader.load();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return;
         }

@@ -1,5 +1,7 @@
 package it.sylwiabrant.weather_app.model;
 
+import static it.sylwiabrant.weather_app.controller.Messages.DEFAULT_DATA_PARAMETER;
+
 /**
  * Created by Sylwia Brant
  */
@@ -17,6 +19,21 @@ public abstract class WeatherConditions {
     private String rain;
     private String clouds;
 
+    public WeatherConditions() {
+        this.icon = DEFAULT_DATA_PARAMETER;
+        this.city = DEFAULT_DATA_PARAMETER;
+        this.country = DEFAULT_DATA_PARAMETER;
+        this.main = DEFAULT_DATA_PARAMETER;
+        this.description = DEFAULT_DATA_PARAMETER;
+        this.date = DEFAULT_DATA_PARAMETER;
+        this.pressure = DEFAULT_DATA_PARAMETER;
+        this.windSpeed = DEFAULT_DATA_PARAMETER;
+        this.windDirection = DEFAULT_DATA_PARAMETER;
+        this.snow = DEFAULT_DATA_PARAMETER;
+        this.rain = DEFAULT_DATA_PARAMETER;
+        this.clouds = DEFAULT_DATA_PARAMETER;
+    }
+
     public String getIcon() {
         return icon;
     }
@@ -24,6 +41,7 @@ public abstract class WeatherConditions {
     public void setIcon(String icon) {
         this.icon = icon;
     }
+
     public String getDate() {
         return date;
     }
