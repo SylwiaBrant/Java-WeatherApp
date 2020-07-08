@@ -10,13 +10,15 @@ import javafx.stage.Stage;
 
 import static it.sylwiabrant.weather_app.controller.Messages.ERROR;
 import static it.sylwiabrant.weather_app.controller.Messages.NO_RESULTS_FOR_CITY;
+import static it.sylwiabrant.weather_app.model.CitySearchResult.FAILED_BY_CITY_NAME;
+import static it.sylwiabrant.weather_app.model.CitySearchResult.SUCCESS;
 
 /**
  * Created by Sylwia Brant
  */
 public class ChooseSingleCityController extends BaseController {
 
-    private WeatherFetchingCoordinator fetchingCoordinator;
+    private final WeatherFetchingCoordinator fetchingCoordinator;
     private final int index;
 
     @FXML
@@ -29,14 +31,18 @@ public class ChooseSingleCityController extends BaseController {
     void searchCityAction() {
         String newCityName = cityField.getText();
         CitySearchResult citySearchResult = fetchingCoordinator.refetchCityWeatherData(newCityName, index);
-        if (citySearchResult == CitySearchResult.SUCCESS) {
-            viewFactory.closeStage((Stage) errorLabel.getScene().getWindow());
-            return;
-        } else if (citySearchResult == CitySearchResult.FAILED_BY_CITY_NAME) {
+        if (citySearchResult == SUCCESS) {
+            closeChoiceWindow();
+        } else if (citySearchResult == FAILED_BY_CITY_NAME) {
             errorLabel.setText(NO_RESULTS_FOR_CITY);
-        } else
+        } else {
             errorLabel.setText(ERROR);
-        weatherData.removeData();
+            weatherData.removeData();
+        }
+    }
+
+    protected void closeChoiceWindow() {
+        viewFactory.closeStage((Stage) errorLabel.getScene().getWindow());
     }
 
     public ChooseSingleCityController(WeatherFetchingCoordinator fetchingCoordinator,
@@ -46,5 +52,19 @@ public class ChooseSingleCityController extends BaseController {
         super(weatherData, viewFactory, fxmlName);
         this.fetchingCoordinator = fetchingCoordinator;
         this.index = index;
+    }
+
+    public ChooseSingleCityController(WeatherFetchingCoordinator fetchingCoordinator,
+                                      WeatherDataCollection weatherData,
+                                      ViewFactory viewFactory,
+                                      String fxmlName,
+                                      int index,
+                                      TextField cityField,
+                                      Label errorLabel) {
+        super(weatherData, viewFactory, fxmlName);
+        this.fetchingCoordinator = fetchingCoordinator;
+        this.index = index;
+        this.cityField = cityField;
+        this.errorLabel = errorLabel;
     }
 }

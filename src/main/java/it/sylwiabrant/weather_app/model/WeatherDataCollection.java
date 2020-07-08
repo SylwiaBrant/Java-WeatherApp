@@ -1,5 +1,6 @@
 package it.sylwiabrant.weather_app.model;
 
+import it.sylwiabrant.weather_app.controller.BaseController;
 import it.sylwiabrant.weather_app.controller.WeatherViewController;
 
 import java.util.ArrayList;
@@ -29,13 +30,11 @@ public class WeatherDataCollection {
      * @param index - index in the HashMap,corresponding to upper (0) or lower (1)
      */
     public void addCurrentWeather(CurrentWeather currentWeather, int index) {
-        System.out.println("ładowanie danych do WeatherDataCollection.");
         currentWeatherList.put(index, currentWeather);
     }
 
     /**
      * Load forecast weather data into ForecastList.
-     *
      * @param index - index in the HashMap,corresponding to upper (0) or lower (1)
      *              part of the window
      */
@@ -75,9 +74,13 @@ public class WeatherDataCollection {
      * Removes old current weather object from HashMap at <index> position and invokes
      * loding new data object to said position
      */
-    public void registerObserver(WeatherViewController controller) {
+    public void registerObserver(BaseController controller) {
         if (observer == null)
-            this.observer = controller;
+            this.observer = (WeatherViewController) controller;
+    }
+
+    public BaseController getObserver() {
+       return this.observer;
     }
 
     /**

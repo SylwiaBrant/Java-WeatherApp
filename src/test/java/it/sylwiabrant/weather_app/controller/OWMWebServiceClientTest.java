@@ -1,9 +1,6 @@
 package it.sylwiabrant.weather_app.controller;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-
-import java.net.http.HttpResponse;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,7 +13,7 @@ import static org.mockito.Mockito.spy;
  * Created by Sylwia Brant
  */
 class OWMWebServiceClientTest {
-
+    //objects can be empty as status code is checked in WeatherFetchingCoordinator class
     @Test
     void validQueryAPICallShouldReturnTwoObjects() {
         OWMWebServiceClient client = new OWMWebServiceClient();
@@ -32,7 +29,7 @@ class OWMWebServiceClientTest {
         OWMWebServiceClient client = spy(new OWMWebServiceClient());
         given(client.queryAPI("Londyn")).willThrow(RuntimeException.class);
         //when
-        // then
+        //then
         assertThrows(RuntimeException.class, () -> client.queryAPI("Londyn"));
     }
  }

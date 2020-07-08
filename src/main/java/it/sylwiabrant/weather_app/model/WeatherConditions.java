@@ -7,8 +7,6 @@ import static it.sylwiabrant.weather_app.controller.Messages.DEFAULT_DATA_PARAME
  */
 public abstract class WeatherConditions {
     private String icon;
-    private String city;
-    private String country;
     private String main;
     private String description;
     private String date;
@@ -21,8 +19,6 @@ public abstract class WeatherConditions {
 
     public WeatherConditions() {
         this.icon = DEFAULT_DATA_PARAMETER;
-        this.city = DEFAULT_DATA_PARAMETER;
-        this.country = DEFAULT_DATA_PARAMETER;
         this.main = DEFAULT_DATA_PARAMETER;
         this.description = DEFAULT_DATA_PARAMETER;
         this.date = DEFAULT_DATA_PARAMETER;
@@ -48,22 +44,6 @@ public abstract class WeatherConditions {
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public String getMain() {

@@ -2,7 +2,6 @@ package it.sylwiabrant.weather_app.controller;
 
 import it.sylwiabrant.weather_app.model.CitySearchResult;
 import it.sylwiabrant.weather_app.model.WeatherDataCollection;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,7 +36,7 @@ public class WeatherFetchingCoordinator {
         try {
             List<String> allFutures = client.queryAPI(city);
             JSONObject currentWeather = new JSONObject(allFutures.get(0));
-            JSONArray forecasts = new JSONObject(allFutures.get(1)).getJSONArray("list");
+            JSONObject forecasts = new JSONObject(allFutures.get(1));
             CitySearchResult result = validateFetchedData(currentWeather);
             if (result == CitySearchResult.SUCCESS) {
                 weatherData.loadCityData(converter.toCurrentWeatherObject(currentWeather),
@@ -47,7 +46,7 @@ public class WeatherFetchingCoordinator {
         } catch (RuntimeException e) {
             e.printStackTrace();
             System.out.println("Cause=" + e.getCause());
-            return CitySearchResult.FAILED_BY_NETWORK;
+            return CitySearchResult.FAILED_BY_UNEXPECTED_ERROR;
         }
     }
 
@@ -61,7 +60,7 @@ public class WeatherFetchingCoordinator {
         try {
             List<String> allFutures = client.queryAPI(city);
             JSONObject currentWeather = new JSONObject(allFutures.get(0));
-            JSONArray forecasts = new JSONObject(allFutures.get(1)).getJSONArray("list");
+            JSONObject forecasts = new JSONObject(allFutures.get(1));
             CitySearchResult result = validateFetchedData(currentWeather);
             if (result == CitySearchResult.SUCCESS) {
                 weatherData.updateCityData(converter.toCurrentWeatherObject(currentWeather),
