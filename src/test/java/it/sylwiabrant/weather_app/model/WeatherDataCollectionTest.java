@@ -1,30 +1,22 @@
 package it.sylwiabrant.weather_app.model;
 
-import it.sylwiabrant.weather_app.controller.FromJsonConverter;
-import it.sylwiabrant.weather_app.controller.OWMWebServiceClient;
-import it.sylwiabrant.weather_app.controller.WeatherFetchingCoordinator;
-import org.junit.jupiter.api.BeforeAll;
+import it.sylwiabrant.weather_app.controller.BaseController;
+import it.sylwiabrant.weather_app.controller.WeatherViewController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 import java.util.ArrayList;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.spy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 
 /**
  * Created by Sylwia Brant
  */
 class WeatherDataCollectionTest {
-    private static WeatherDataCollection weatherData;
-    WeatherFetchingCoordinator coordinator = spy(new WeatherFetchingCoordinator(weatherData, client,
-            fromJsonConverter));
-    @Mock
-    private static FromJsonConverter fromJsonConverter;
-    @Mock
-    private static OWMWebServiceClient client;
+    private final WeatherDataCollection weatherData = new WeatherDataCollection();
 
     @BeforeEach
     void cleanUp() {
@@ -36,7 +28,6 @@ class WeatherDataCollectionTest {
     void currentWeatherCollectionShouldBeEmptyAfterRemovingElements() {
         //given
         CurrentWeather currentWeather = new CurrentWeather();
-        // WeatherDataCollection weatherData = new WeatherDataCollection(coordinator);
         weatherData.addCurrentWeather(currentWeather, 0);
         //when
         weatherData.removeData();
@@ -50,7 +41,6 @@ class WeatherDataCollectionTest {
         ForecastWeather forecastWeather = new ForecastWeather();
         ArrayList<ForecastWeather> forecasts = new ArrayList<>();
         forecasts.add(forecastWeather);
-        //   WeatherDataCollection weatherData = new WeatherDataCollection(coordinator);
         weatherData.addForecasts(forecasts, 0);
         //when
         weatherData.removeData();
@@ -76,5 +66,15 @@ class WeatherDataCollectionTest {
         weatherData.addForecasts(forecasts, 1);
         //then
         assertThat(weatherData.getSingleCityForecasts(1), is(forecasts));
+    }
+
+    @Test
+    void observerShouldBeRegistered() {
+        //given
+        BaseController controller = mock(WeatherViewController.class);
+        //when
+        weatherData.registerObserver(controller);
+        //then
+        assertEquals(controller, weatherData.getObserver());
     }
 }

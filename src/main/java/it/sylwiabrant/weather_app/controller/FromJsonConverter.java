@@ -163,9 +163,10 @@ public class FromJsonConverter {
      * API response provides 40 data sets of every 3h weather forecast.
      * Extract only data sets for next 4 days: 8 measurement sets per day
      *
-     * @param jsonArray - array of 40 data sets downloaded from API
+     * @param jsonObject - object containing 40 data sets downloaded from API
      */
-    public ArrayList<ForecastWeather> toForecastsArray(JSONArray jsonArray) {
+    public ArrayList<ForecastWeather> toForecastsArray(JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("list");
         int startingSet = ((24 - LocalTime.now().getHour()) / 3);
         int endingSet = startingSet + (4 * 8);
 
@@ -195,8 +196,8 @@ public class FromJsonConverter {
         double tempTemp, minTemp = 100, maxTemp = -100, rain = 0.00, snow = 0.00;
         int clouds = 0;
         long timestamp;
-        String main = "", description = "", pressure = "", windSpeed = "", windDirection = "", date = "",
-                icon = "";
+        String main = "", description = "", pressure = "", windSpeed = "", windDirection = "",
+                date = "", icon = "";
 
         for (int i = 0; i < 8; i++) {
             JSONObject forecastChunk = day.get(i);
@@ -208,10 +209,22 @@ public class FromJsonConverter {
                 maxTemp = tempTemp;
             /*get cumulative rain and snow per day*/
             if (forecastChunk.has("snow")) {
-                snow += ((Number) forecastChunk.getJSONObject("snow").get("3h")).doubleValue();
+                if (forecastChunk.getJSONObject("snow").has("3h")) {
+                    snow += ((Number) forecastChunk.getJSONObject("snow").get("3h")).doubleValue();
+                } else if (forecastChunk.getJSONObject("snow").has("1h")) {
+                    snow += ((Number) forecastChunk.getJSONObject("snow").get("1h")).doubleValue();
+                } else {
+                    snow += 0;
+                }
             }
             if (forecastChunk.has("rain")) {
-                rain += ((Number) forecastChunk.getJSONObject("rain").get("3h")).doubleValue();
+                if (forecastChunk.getJSONObject("rain").has("3h")) {
+                    rain += ((Number) forecastChunk.getJSONObject("rain").get("3h")).doubleValue();
+                } else if (forecastChunk.getJSONObject("rain").has("1h")) {
+                    rain += ((Number) forecastChunk.getJSONObject("rain").get("1h")).doubleValue();
+                } else {
+                    rain += 0;
+                }
             }
             /*get rest of conditions for noon*/
             if (i % 6 == 0) {
